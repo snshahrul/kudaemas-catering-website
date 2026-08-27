@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>KudaEmas · CateringHouse</title>
+    <!-- Font Awesome Icons (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f3ee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        /* main card – app container */
+        .business-card-app {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 40px 40px 32px 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            transition: all 0.2s ease;
+            border: 1px solid #f0e8e0;
+        }
+
+        /* header – brand zone */
+        .brand-header {
+            padding: 28px 24px 16px 24px;
+            background: linear-gradient(145deg, #fcf9f7 0%, #f4ede8 100%);
+            border-bottom: 1px solid #e7ddd5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo-symbol {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .brand-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #2c1e16;
+            background: linear-gradient(135deg, #3f2a1c 0%, #6b4c34 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .brand-sub {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #8b6f5a;
+            background: rgba(255, 242, 234, 0.6);
+            padding: 6px 18px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 4px;
+            backdrop-filter: blur(2px);
+            border: 1px solid #e3d4c8;
+        }
+
+        .divider-line {
+            width: 60px;
+            height: 3px;
+            background: #d8c3b4;
+            border-radius: 4px;
+            margin: 12px auto 6px auto;
+        }
+
+        /* main content – business info */
+        .info-grid {
+            padding: 24px 24px 12px 24px;
+            background: #ffffff;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #fbf8f6;
+            padding: 14px 18px;
+            border-radius: 60px;
+            margin-bottom: 12px;
+            border: 1px solid #ede5de;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .contact-item:active {
+            background: #f3e9e2;
+            transform: scale(0.98);
+        }
+
+        .contact-item i {
+            width: 28px;
+            font-size: 1.3rem;
+            color: #7a5d48;
+            text-align: center;
+        }
+
+        .contact-detail {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #a78b78;
+            font-weight: 600;
+        }
+
+        .contact-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1f140e;
+            word-break: break-word;
+        }
+
+        .contact-value small {
+            font-weight: 400;
+            color: #735b49;
+            font-size: 0.85rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            flex: 1;
+            min-width: 100px;
+            background: #f0e7e0;
+            border: none;
+            padding: 12px 8px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #352419;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.15s ease;
+            border: 1px solid #ddd0c4;
+            background: #faf5f1;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-action i {
+            font-size: 1rem;
+            color: #7a5d48;
+        }
+
+        .btn-action:active {
+            background: #e7d9cf;
+            transform: scale(0.94);
+            border-color: #c6b2a2;
+        }
+
+        .btn-primary {
+            background: #2c1e16;
+            border-color: #2c1e16;
+            color: #fcf6f0;
+        }
+
+        .btn-primary i {
+            color: #efded2;
+        }
+
+        .btn-primary:active {
+            background: #1e130e;
+        }
+
+        /* social + extra */
+        .social-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            padding: 18px 24px 22px 24px;
+            background: #fcf9f7;
+            border-top: 1px solid #eee5dd;
+        }
+
+        .social-icon {
+            color: #6a4f3b;
+            font-size: 1.6rem;
+            transition: all 0.15s ease;
+            background: #f2ebe5;
+            width: 48px;
+            height: 48px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 1px solid #e1d3c8;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            cursor: pointer;
+        }
+
+        .social-icon:active {
+            background: #e1d2c4;
+            transform: scale(0.92);
+            color: #3a271c;
+        }
+
+        .social-icon i {
+            font-size: 1.5rem;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 6px 0 14px 0;
+            font-size: 0.65rem;
+            color: #b6a291;
+            letter-spacing: 1px;
+            background: #fcf9f7;
+            border-top: 1px solid #eee5dd;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-note span {
+            opacity: 0.7;
+        }
+
+        /* responsive */
+        @media (max-width: 400px) {
+            .brand-name {
+                font-size: 1.8rem;
+            }
+            .contact-item {
+                padding: 12px 14px;
+            }
+            .btn-action {
+                font-size: 0.8rem;
+                min-width: 80px;
+                padding: 10px 6px;
+            }
+            .social-icon {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        /* simulated logo image – pure css representation of the "logo.png" description */
+        .logo-emblem {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: rgba(235, 219, 207, 0.3);
+            padding: 6px 18px 6px 14px;
+            border-radius: 60px;
+            border: 1px solid #dccfc4;
+            backdrop-filter: blur(2px);
+            margin-bottom: 4px;
+        }
+
+        .logo-emblem i {
+            font-size: 1.8rem;
+            color: #a77b5e;
+        }
+        .logo-emblem span {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #3d2a1c;
+            letter-spacing: 1px;
+        }
+        .logo-emblem small {
+            font-weight: 400;
+            font-size: 0.7rem;
+            color: #7b614e;
+            letter-spacing: 0.5px;
+            margin-left: 4px;
+        }
+        /* "CATERINGHOUSE" secondary in header */
+        .catering-tag {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            color: #735a47;
+            background: #efe6de;
+            padding: 2px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 2px;
+            border: 1px solid #ddd0c4;
+        }
+
+        /* custom tap highlight */
+        .no-tap-highlight {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* toast */
+        .toast-message {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="business-card-app no-tap-highlight">
+
+    <!-- HEADER: logo + brand (based on attachment) -->
+    <div class="brand-header">
+        <div class="logo-symbol">
+            <div class="logo-emblem">
+                <i class="fas fa-horse-head"></i>
+                <span>KudaEmas</span>
+                <small>✦</small>
+            </div>
+        </div>
+        <div class="catering-tag">
+            <i class="fas fa-utensils" style="margin-right: 6px; font-size: 0.7rem;"></i> CATERINGHOUSE
+        </div>
+        <div class="divider-line"></div>
+        <div style="font-size: 0.75rem; color: #836b58; margin-top: 4px; letter-spacing: 0.8px;">
+            <i class="fas fa-map-pin" style="margin-right: 4px;"></i>  Petaling Jaya · Malaysia
+        </div>
+    </div>
+
+    <!-- BUSINESS INFO (digital card) with updated details -->
+    <div class="info-grid">
+        <!-- Phone (two numbers) -->
+        <div class="contact-item" onclick="handleAction('phone')">
+            <i class="fas fa-phone-alt"></i>
+            <div class="contact-detail">
+                <span class="contact-label">📞 phone</span>
+                <span class="contact-value">+6011-3979 4166 <small> / +6018-355 1765</small></span>
+            </div>
+            <i class="fas fa-chevron-right" style="color: #cbb6a8; font-size: 0.8rem;"></i>
+        </div>
+        <!-- Email (updated) -->
+        <div class="contact-item" onclick="handleAction('email')">
+            <i class="fas fa-envelope"></i>
+            <div class="contact-detail">
+                <span class="contact-label">✉ email</span>
+                <span class="contact-value">kudaemas.app@gmail.com</span>
+            </div>
+            <i class="fas fa-chevron-right" style="color: #cbb6a8; font-size: 0.8rem;"></i>
+        </div>
+        <!-- Address (full new address) -->
+        <div class="contact-item" onclick="handleAction('address')">
+            <i class="fas fa-location-dot"></i>
+            <div class="contact-detail">
+                <span class="contact-label">📍 address</span>
+                <span class="contact-value">10-15-37, Tingkat 15, Desa Mentari Apartment Block 10, 46060 Petaling Jaya, Selangor, Malaysia</span>
+            </div>
+            <i class="fas fa-chevron-right" style="color: #cbb6a8; font-size: 0.8rem;"></i>
+        </div>
+        <!-- Website (updated with live link) -->
+        <div class="contact-item" onclick="handleAction('website')">
+            <i class="fas fa-globe"></i>
+            <div class="contact-detail">
+                <span class="contact-label">🌐 website</span>
+                <span class="contact-value">kudaemas-catering.netlify.app</span>
+            </div>
+            <i class="fas fa-chevron-right" style="color: #cbb6a8; font-size: 0.8rem;"></i>
+        </div>
+
+        <!-- action buttons (save / share / call) -->
+        <div class="action-buttons">
+            <button class="btn-action" onclick="handleAction('call')"><i class="fas fa-phone"></i> Call</button>
+            <button class="btn-action" onclick="handleAction('save')"><i class="fas fa-address-card"></i> Save</button>
+            <button class="btn-action btn-primary" onclick="handleAction('share')"><i class="fas fa-share-alt"></i> Share</button>
+        </div>
+    </div>
+
+    <!-- social links (as interactive icons) -->
+    <div class="social-row">
+        <a href="#" class="social-icon" onclick="handleAction('instagram'); return false;"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon" onclick="handleAction('tiktok'); return false;"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="social-icon" onclick="handleAction('youtube'); return false;"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-icon" onclick="handleAction('whatsapp'); return false;"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <!-- footer / extra note -->
+    <div class="footer-note">
+        <span><i class="far fa-clock"></i> 08:00 – 21:00</span>
+        <span><i class="fas fa-tag"></i> #KudaEmas</span>
+        <span><i class="fas fa-certificate"></i> Halal</span>
+        <span><i class="fas fa-map-pin"></i> Petaling Jaya</span>
+    </div>
+</div>
+
+<!-- interactive feedback (toast) -->
+<script>
+    (function() {
+        // create a lightweight toast element if not exists
+        let toast = document.getElementById('toast-message');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'toast-message';
+            toast.style.position = 'fixed';
+            toast.style.bottom = '30px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.background = '#2c1e16';
+            toast.style.color = '#f5ede7';
+            toast.style.padding = '12px 28px';
+            toast.style.borderRadius = '60px';
+            toast.style.fontWeight = '500';
+            toast.style.fontSize = '0.95rem';
+            toast.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)';
+            toast.style.zIndex = '999';
+            toast.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            toast.style.opacity = '0';
+            toast.style.pointerEvents = 'none';
+            toast.style.letterSpacing = '0.3px';
+            toast.style.border = '1px solid #4f3828';
+            toast.style.backdropFilter = 'blur(4px)';
+            document.body.appendChild(toast);
+        }
+
+        let timeoutId = null;
+
+        // open website in new tab if action is website
+        window.handleAction = function(action) {
+            let message = '';
+            let openUrl = null;
+
+            switch(action) {
+                case 'phone':
+                    message = '📞 Calling +6011-3979 4166 / +6018-355 1765';
+                    break;
+                case 'email':
+                    message = '✉ Opening email to kudaemas.app@gmail.com';
+                    openUrl = 'mailto:kudaemas.app@gmail.com';
+                    break;
+                case 'address':
+                    message = '📍 Open map: 10-15-37, Tingkat 15, Desa Mentari Apartment Block 10, 46060 Petaling Jaya, Selangor, Malaysia';
+                    // Google Maps link for the address
+                    openUrl = 'https://www.google.com/maps/search/?api=1&query=10-15-37+Tingkat+15+Desa+Mentari+Apartment+Block+10+46060+Petaling+Jaya+Selangor+Malaysia';
+                    break;
+                case 'website':
+                    message = '🌐 Opening kudaemas-catering.netlify.app';
+                    openUrl = 'https://kudaemas-catering.netlify.app/';
+                    break;
+                case 'call':
+                    message = '📞 Initiating call ...';
+                    openUrl = 'tel:+601139794166'; // primary number
+                    break;
+                case 'save':
+                    message = '💾 Contact saved to device (simulated)';
+                    break;
+                case 'share':
+                    message = '↗️ Share this card (simulated)';
+                    break;
+                case 'instagram':
+                    message = '📸 Open Instagram @kudaemas_catering';
+                    openUrl = 'https://instagram.com/kudaemas_catering';
+                    break;
+                case 'tiktok':
+                    message = '🎵 Open TikTok @kudaemascatering';
+                    openUrl = 'https://tiktok.com/@kudaemascatering';
+                    break;
+                case 'youtube':
+                    message = '▶️ Open YouTube /KudaEmasCatering';
+                    openUrl = 'https://youtube.com/@KudaEmasCatering';
+                    break;
+                case 'whatsapp':
+                    message = '💬 Open WhatsApp +6011-3979 4166';
+                    openUrl = 'https://wa.me/601139794166';
+                    break;
+                default:
+                    message = '✨ Action: ' + action;
+            }
+
+            // show toast
+            toast.textContent = message;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(12px)';
+            }, 2200);
+
+            // if we have a URL, open it (for web/email/maps/phone etc)
+            if (openUrl) {
+                // small delay so toast appears first
+                setTimeout(() => {
+                    window.open(openUrl, '_blank');
+                }, 180);
+            }
+
+            // optional: haptic / vibration simulation (if supported)
+            if (navigator.vibrate) navigator.vibrate(12);
+
+            console.log('[KudaEmas] action:', action, message);
+        };
+
+        // additional visual feedback on contact items
+        document.querySelectorAll('.contact-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                this.style.backgroundColor = '#efe4db';
+                setTimeout(() => {
+                    this.style.backgroundColor = '';
+                }, 120);
+            });
+        });
+
+        // clean toast on page unload
+        window.addEventListener('beforeunload', function() {
+            if (toast) toast.remove();
+        });
+    })();
+</script>
+</body>
+</html>
