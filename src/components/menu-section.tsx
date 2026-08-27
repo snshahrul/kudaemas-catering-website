@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Sparkle } from "lucide-react";
+import { ArrowUpRight, Clock, Info, Minus, Plus, Sparkle, Users } from "lucide-react";
 import type { MenuItem } from "@/db/schema";
 import { Reveal, RevealText } from "./reveal";
 
@@ -106,6 +106,74 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Buffet Catering Pricing */}
+        <Reveal delay={0.2}>
+          <div className="mt-16 rounded-3xl border border-gold/25 bg-fern/80 p-8 backdrop-blur-sm sm:p-10">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
+              {/* Main pricing */}
+              <div className="flex-1">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-gold/10 text-gold">
+                    <Users className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-display text-2xl font-medium text-cream">
+                    Buffet Catering
+                  </h3>
+                </div>
+                <div className="mt-5 flex items-baseline gap-2">
+                  <span className="font-display text-4xl font-semibold text-gold sm:text-5xl">
+                    From RM15.00
+                  </span>
+                  <span className="text-sm text-cream/50">/ pax</span>
+                </div>
+                <p className="mt-3 text-sm text-cream/60">
+                  Minimum 30 pax
+                </p>
+              </div>
+
+              {/* Terms & conditions */}
+              <div className="flex-1 space-y-4">
+                <div className="flex items-start gap-3">
+                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-gold/70" />
+                  <p className="text-sm leading-relaxed text-cream/65">
+                    Delivery and setup fee is from <span className="font-semibold text-cream/80">RM250</span>
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-gold/70" />
+                  <p className="text-sm leading-relaxed text-cream/65">
+                    Orders have to be in increments of <span className="font-semibold text-cream/80">5 pax</span>
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Plus className="mt-0.5 h-4 w-4 shrink-0 text-gold/70" />
+                  <p className="text-sm leading-relaxed text-cream/65">
+                    <span className="font-semibold text-cream/80">+RM3 per pax</span> for 20-29 pax orders
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold/70" />
+                  <p className="text-sm leading-relaxed text-cream/65">
+                    Orders need to be finalized at least <span className="font-semibold text-cream/80">4 working days</span> before the event
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold/70" />
+                  <p className="text-sm leading-relaxed text-cream/65">
+                    Teardown time will be <span className="font-semibold text-cream/80">2 hours and 30 minutes</span> from serving time
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-gold/70" />
+                  <p className="text-sm leading-relaxed text-cream/65">
+                    All prices are subject to delivery charges
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
 
         <Reveal delay={0.15}>
           <p className="mt-12 text-center text-xs uppercase tracking-[0.3em] text-cream/40">
