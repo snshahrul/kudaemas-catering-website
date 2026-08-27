@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #0a0f0b;
+  --color-moss: #10160f;
+  --color-fern: #182015;
+  --color-pine: #22301f;
+  --color-gold: #c9a24b;
+  --color-gold-soft: #e2c786;
+  --color-gold-bright: #f0d9a0;
+  --color-cream: #f3ecdc;
+  --color-sand: #d9cdae;
+  --color-clay: #b4552d;
+
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "Manrope", "Helvetica Neue", sans-serif;
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-marquee-slow: marquee 48s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-forest);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-forest);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-forest);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-pine);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* Film grain overlay for texture */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -100%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 9s steps(10) infinite;
+}
+
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-3%, -6%); }
+  30% { transform: translate(4%, 3%); }
+  50% { transform: translate(-4%, 6%); }
+  70% { transform: translate(6%, -2%); }
+  90% { transform: translate(-2%, 4%); }
+}
+
+/* Outlined display text */
+.text-outline {
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-gold) 55%, transparent);
+  color: transparent;
+}
+
+/* Gold shimmer for headings */
+.gold-shimmer {
+  background: linear-gradient(
+    105deg,
+    var(--color-gold) 20%,
+    var(--color-gold-bright) 40%,
+    var(--color-gold-soft) 55%,
+    var(--color-gold) 75%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 220% center;
+  }
+}
+
+/* Hairline gold divider */
+.gold-rule {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-gold) 70%, transparent),
+    transparent
+  );
+  height: 1px;
+}
+
+/* Hide number input spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Native date picker indicator tint */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.75) sepia(0.6) saturate(3) hue-rotate(3deg);
+  cursor: pointer;
+}
