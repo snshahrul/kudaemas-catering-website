@@ -89,7 +89,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
           className="mt-7 max-w-xl text-base leading-relaxed text-cream/75 sm:text-lg"
         >
-          We craft Malaysian traditional feasts that turn weddings, summits and
+          We craft Malaysian traditional feasts that turn weddings, corporate summits and
           private celebrations into unforgettable moments.
         </motion.p>
 
