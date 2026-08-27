@@ -153,6 +153,12 @@ export function Footer() {
           <p className="text-xs text-cream/40">
             © {new Date().getFullYear()} KudaEmas Catering House. All rights reserved.
           </p>
+          <a
+            href="/card"
+            className="font-display text-sm italic text-gold/70 transition-colors hover:text-gold"
+          >
+            Digital Business Card
+          </a>
           <p className="font-display text-sm italic text-gold/70">
             Crafted with fire in Malaysia
           </p>
