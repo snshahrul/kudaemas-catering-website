@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Clock, Info, Minus, Plus, Sparkle, Users } from "lucide-react";
 import type { MenuItem } from "@/db/schema";
 import { Reveal, RevealText } from "./reveal";
+import { MenuCalculator } from "./menu-calculator";
 
 export function MenuSection({ items }: { items: MenuItem[] }) {
   const categories = useMemo(
@@ -172,6 +173,19 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
                 </div>
               </div>
             </div>
+          </div>
+        </Reveal>
+
+        {/* Menu Foods & Beverages Calculator */}
+        <Reveal delay={0.2}>
+          <div className="mt-16">
+            <div className="mb-8 flex items-center gap-4">
+              <span className="gold-rule w-12" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-gold">
+                Estimate Your Budget
+              </p>
+            </div>
+            <MenuCalculator />
           </div>
         </Reveal>
 
