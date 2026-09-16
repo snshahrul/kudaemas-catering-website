@@ -50,6 +50,15 @@ export function Hero() {
           </p>
         </motion.div>
 
+        {/*
+          "The Golden Standard of Catering" — a soft band of light runs left →
+          right across every letterform and repeats, like water flowing over the
+          words.
+
+          The gradient sits on an inner span (not on the motion span) so the
+          clip-to-text element is never transformed itself — WebKit/Safari can
+          paint `background-clip: text` as a solid block on transformed nodes.
+        */}
         <h1 className="mt-6 font-display text-[13vw] font-medium leading-[0.95] tracking-tight text-cream sm:text-[11vw] lg:text-[7.5rem]">
           <span className="block overflow-hidden">
             <motion.span
@@ -58,17 +67,19 @@ export function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 1.1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              The Golden
+              <span className="flow-light block">The Golden</span>
             </motion.span>
           </span>
           <span className="block overflow-hidden">
             <motion.span
-              className="block italic gold-shimmer"
+              className="block"
               initial={{ y: "108%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1.1, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
-              Standard
+              <span className="flow-light flow-light-gold flow-delay-1 block italic">
+                Standard
+              </span>
             </motion.span>
           </span>
           <span className="block overflow-hidden">
@@ -78,7 +89,7 @@ export function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 1.1, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              of Catering
+              <span className="flow-light flow-delay-2 block">of Catering</span>
             </motion.span>
           </span>
         </h1>

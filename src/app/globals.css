@@ -85,25 +85,112 @@ body {
   color: transparent;
 }
 
-/* Gold shimmer for headings */
+/* ---------------------------------------------------------------------------
+   Flowing light — a soft band of light runs left → right straight across the
+   letterforms, then loops again and again, like water running over the words.
+
+   Usage: add `flow-light` to any heading / word (cream letterforms) or
+   `flow-light-gold` for gold letterforms. Tune per element with
+   --flow-duration / --flow-delay / --flow-size.
+   --------------------------------------------------------------------------- */
+
+@keyframes light-flow {
+  /* light enters off the left edge …            */
+  0% {
+    background-position: 116% center;
+  }
+  /* … travels right across every letter …       */
+  88% {
+    background-position: -16% center;
+  }
+  /* … then a short beat while the next wave forms. */
+  100% {
+    background-position: -16% center;
+  }
+}
+
+.flow-light,
+.flow-light-gold,
 .gold-shimmer {
-  background: linear-gradient(
-    105deg,
-    var(--color-gold) 20%,
-    var(--color-gold-bright) 40%,
-    var(--color-gold-soft) 55%,
-    var(--color-gold) 75%
+  --flow-base: var(--color-cream);
+  --flow-deep: #cbb98d;
+  --flow-glint: var(--color-gold-bright);
+  --flow-peak: #fffef9;
+  --flow-angle: 100deg;
+  --flow-size: 250%;
+  --flow-duration: 5.6s;
+  --flow-delay: 0s;
+
+  /* one wave: shadow trailing behind, bright crest, soft return ahead —
+     like light (or water) running over the letterforms, left to right */
+  background-image: linear-gradient(
+    var(--flow-angle),
+    var(--flow-base) 0%,
+    var(--flow-base) 34%,
+    var(--flow-deep) 42%,
+    var(--flow-glint) 46%,
+    var(--flow-peak) 50%,
+    var(--flow-glint) 54%,
+    var(--flow-base) 60%,
+    var(--flow-base) 100%
   );
-  background-size: 220% auto;
+  background-repeat: repeat;
+  background-size: var(--flow-size) 100%;
+  background-position: 116% center;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: shimmer 6s linear infinite;
+  -webkit-text-fill-color: transparent;
+  animation: light-flow var(--flow-duration) linear infinite;
+  animation-delay: var(--flow-delay);
 }
 
-@keyframes shimmer {
-  to {
-    background-position: 220% center;
+/* Gold letterforms: logo word mark, italic accent words, gold headings.
+   Same travel + period as the cream variant, so several lines stay in phase
+   and read as one sheet of light moving over the whole headline. */
+.flow-light-gold,
+.gold-shimmer {
+  --flow-base: var(--color-gold);
+  --flow-deep: #8f6f28;
+  --flow-glint: var(--color-gold-bright);
+  --flow-peak: #fff6dc;
+}
+
+/* Stagger helpers — a slight trail so the wave ripples down the headline
+   instead of cutting straight across it */
+.flow-delay-1 {
+  --flow-delay: 0.18s;
+}
+.flow-delay-2 {
+  --flow-delay: 0.36s;
+}
+.flow-delay-3 {
+  --flow-delay: 0.54s;
+}
+
+/* Respect visitors who prefer less motion: keep the colour, drop the flow */
+@media (prefers-reduced-motion: reduce) {
+  .flow-light,
+  .flow-light-gold,
+  .gold-shimmer {
+    animation: none;
+    background-position: 116% center;
+  }
+}
+
+/* Older engines without text clipping: plain coloured, readable text */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .flow-light,
+  .flow-light-gold,
+  .gold-shimmer {
+    background-image: none;
+    color: inherit;
+    animation: none;
+  }
+
+  .flow-light-gold,
+  .gold-shimmer {
+    color: var(--color-gold);
   }
 }
 
