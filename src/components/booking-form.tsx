@@ -102,9 +102,10 @@ export function BookingForm() {
   }
 
   return (
-    <section id="reserve" className="relative overflow-hidden py-24 sm:py-32">
+    <section id="reserve" className="section-shell relative overflow-hidden py-24 sm:py-32">
       {/* Ambient glow */}
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-gold/[0.07] blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-gold/[0.08] blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-[280px] w-[420px] rounded-full bg-gold/[0.05] blur-[100px]" />
 
       <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
         {/* Left: pitch + contact */}
@@ -385,7 +386,7 @@ export function BookingForm() {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="group flex w-full items-center justify-center gap-3 rounded-full bg-gold px-8 py-4.5 text-xs font-bold uppercase tracking-[0.25em] text-forest transition-all duration-300 hover:bg-gold-bright hover:shadow-[0_0_44px_rgba(201,162,75,0.5)] disabled:cursor-not-allowed disabled:opacity-70"
+                    className="btn-sheen group flex w-full items-center justify-center gap-3 rounded-full bg-gold px-8 py-4.5 text-xs font-bold uppercase tracking-[0.25em] text-forest transition-all duration-300 hover:bg-gold-bright hover:shadow-[0_0_44px_rgba(201,162,75,0.5)] disabled:cursor-not-allowed disabled:opacity-70"
                   >
                     {status === "submitting" ? (
                       <>

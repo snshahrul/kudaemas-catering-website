@@ -205,6 +205,107 @@ body {
   height: 1px;
 }
 
+/* ---------------------------------------------------------------------------
+   Premium professional system
+   --------------------------------------------------------------------------- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.glass-panel {
+  background: color-mix(in srgb, var(--color-fern) 72%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid color-mix(in srgb, var(--color-cream) 10%, transparent);
+}
+
+.card-lift {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease,
+    box-shadow 0.5s ease;
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--color-gold) 40%, transparent);
+  box-shadow: 0 24px 60px -20px rgba(201, 162, 75, 0.32), 0 18px 50px -20px rgba(0, 0, 0, 0.7);
+}
+
+.section-shell {
+  position: relative;
+}
+.section-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(720px 320px at 50% 0%, rgba(201, 162, 75, 0.06), transparent 70%),
+    radial-gradient(560px 280px at 90% 100%, rgba(201, 162, 75, 0.04), transparent 70%);
+}
+
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: translateX(-110%);
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.45) 50%, transparent 80%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.btn-sheen:hover::after {
+  transform: translateX(110%);
+}
+
+.luxe-input {
+  width: 100%;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--color-cream) 14%, transparent);
+  background: color-mix(in srgb, var(--color-forest) 62%, transparent);
+  padding: 0.9rem 1rem;
+  font-size: 0.875rem;
+  color: var(--color-cream);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.luxe-input::placeholder {
+  color: color-mix(in srgb, var(--color-cream) 30%, transparent);
+}
+.luxe-input:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.22);
+  background: rgba(10, 15, 11, 0.85);
+}
+
+.divider-fade {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 162, 75, 0.28), transparent);
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float-soft {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+img {
+  text-rendering: optimizeLegibility;
+}
+
 /* Hide number input spinners */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

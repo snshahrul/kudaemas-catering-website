@@ -17,7 +17,7 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
   const filtered = active === "All" ? items : items.filter((i) => i.category === active);
 
   return (
-    <section id="menus" className="relative overflow-hidden py-24 sm:py-32">
+    <section id="menus" className="section-shell relative overflow-hidden py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div>
@@ -64,7 +64,7 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.55, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-cream/10 bg-fern"
+                className="card-lift group relative flex flex-col overflow-hidden rounded-3xl border border-cream/10 bg-fern"
               >
                 <div className="relative aspect-[16/11] overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -110,7 +110,9 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
 
         {/* Buffet Catering Pricing */}
         <Reveal delay={0.2}>
-          <div className="mt-16 rounded-3xl border border-gold/25 bg-fern/80 p-8 backdrop-blur-sm sm:p-10">
+          <div className="glass-panel relative mt-16 overflow-hidden rounded-3xl p-8 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.7)] sm:p-10">
+            <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
+            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gold/[0.07] blur-[80px]" />
             <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
               {/* Main pricing */}
               <div className="flex-1">

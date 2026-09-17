@@ -24,20 +24,22 @@ const PILLARS = [
 
 export function About() {
   return (
-    <section id="about" className="relative overflow-hidden py-24 sm:py-36">
+    <section id="about" className="section-shell relative overflow-hidden py-24 sm:py-32">
       {/* Ghost typography */}
       <span
         aria-hidden="true"
-        className="text-outline pointer-events-none absolute -top-4 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[18vw] font-semibold leading-none opacity-[0.07]"
+        className="text-outline pointer-events-none absolute -top-4 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[18vw] font-semibold leading-none opacity-[0.06]"
       >
         Kuda Emas
       </span>
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute right-[-160px] top-1/3 h-[380px] w-[380px] rounded-full bg-gold/[0.06] blur-[110px]" />
 
       <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
         {/* Imagery collage */}
         <div className="relative">
           <Reveal>
-            <div className="relative overflow-hidden rounded-2xl">
+            <div className="relative overflow-hidden rounded-3xl border border-cream/10 shadow-[0_36px_80px_-30px_rgba(0,0,0,0.75)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/about-a.jpg"
@@ -45,7 +47,13 @@ export function About() {
                 className="aspect-[4/5] w-full object-cover transition-transform duration-700 hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest/60 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl border border-cream/10 bg-forest/70 px-4 py-3 backdrop-blur-md">
+                <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-gold">
+                  Live-fire kitchen
+                </span>
+                <span className="font-display text-sm italic text-cream/80">Est. 2025</span>
+              </div>
             </div>
           </Reveal>
           <Reveal delay={0.2} className="absolute -bottom-10 -right-2 w-[46%] sm:-right-8">
@@ -60,7 +68,7 @@ export function About() {
             </div>
           </Reveal>
           <Reveal delay={0.35} className="absolute -left-3 top-8 sm:-left-8">
-            <div className="flex items-center gap-3 rounded-full border border-gold/30 bg-forest/90 px-5 py-3 backdrop-blur-md">
+            <div className="animate-float-soft flex items-center gap-3 rounded-full border border-gold/30 bg-forest/90 px-5 py-3 shadow-[0_16px_40px_-12px_rgba(201,162,75,0.4)] backdrop-blur-md">
               <Flame className="h-5 w-5 text-gold" />
               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-cream/90">
                 Briyani and its combination
@@ -92,12 +100,12 @@ export function About() {
             </p>
           </Reveal>
 
-          <div className="mt-10 space-y-6">
+          <div className="mt-10 space-y-5">
             {PILLARS.map((pillar, i) => (
               <Reveal key={pillar.number} delay={0.3 + i * 0.1}>
-                <div className="rounded-2xl border border-cream/10 bg-fern/50 p-6">
+                <div className="card-lift glass-panel rounded-2xl p-6">
                   <div className="flex items-center gap-4">
-                    <span className="font-display text-3xl font-semibold text-gold">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-gold/30 bg-gold/10 font-display text-sm font-semibold text-gold">
                       {pillar.number}
                     </span>
                     <h3 className="font-display text-xl font-medium text-cream">

@@ -16,14 +16,14 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "KudaEmas Catering — The Golden Standard of Nusantara Catering",
+  title: "KudaEmas Catering — The Golden Standard of Malaysian Catering",
   description:
-    "Award-winning Indonesian catering house for weddings, corporate summits and private celebrations. Rijsttafel, live stations and grand buffets across the archipelago since 1998.",
+    "Award-winning Malaysian catering house for weddings, corporate summits and private celebrations. Signature grand feasts, live stations and grand buffets across Malaysia since 2025.",
   keywords: [
     "catering",
-    "Indonesian catering",
+    "Malaysian catering",
     "wedding catering",
-    "rijsttafel",
+    "buffet catering Malaysia",
     "corporate catering",
     "KudaEmas",
   ],

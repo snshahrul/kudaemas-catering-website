@@ -32,11 +32,12 @@ export function Navbar() {
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "border-b border-gold/15 bg-forest/85 backdrop-blur-xl"
-            : "bg-transparent"
+            ? "border-b border-gold/15 bg-forest/90 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+            : "border-b border-transparent bg-gradient-to-b from-forest/70 to-transparent"
         }`}
       >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 sm:px-8">
           <a href="#top" aria-label="KudaEmas Catering home">
             <Logo />
           </a>
@@ -56,8 +57,15 @@ export function Navbar() {
 
           <div className="flex items-center gap-3">
             <a
+              href="tel:+601139794166"
+              className="hidden text-[11px] font-bold uppercase tracking-[0.18em] text-cream/60 transition-colors hover:text-gold xl:block"
+            >
+              +6011-3979 4166
+            </a>
+            <span className="hidden h-4 w-px bg-cream/15 xl:block" />
+            <a
               href="#reserve"
-              className="group hidden items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.22em] text-forest transition-all duration-300 hover:bg-gold-bright hover:shadow-[0_0_32px_rgba(201,162,75,0.45)] sm:flex"
+              className="group btn-sheen hidden items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.22em] text-forest transition-all duration-300 hover:bg-gold-bright hover:shadow-[0_0_32px_rgba(201,162,75,0.45)] sm:flex"
             >
               Book Your Event
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -82,6 +90,7 @@ export function Navbar() {
             transition={{ duration: 0.35 }}
             className="fixed inset-0 z-[70] flex flex-col bg-forest/97 backdrop-blur-2xl"
           >
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
             <div className="flex items-center justify-between px-5 py-4 sm:px-8">
               <Logo />
               <button
@@ -117,6 +126,14 @@ export function Navbar() {
                 Book Your Event
                 <ArrowUpRight className="h-4 w-4" />
               </motion.a>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="mt-8 text-xs uppercase tracking-[0.25em] text-cream/40"
+              >
+                Mon–Sat · 08:00–20:00 · +6011-3979 4166
+              </motion.p>
             </div>
           </motion.div>
         )}

@@ -54,7 +54,7 @@ const IMAGES = [
 
 export function Gallery() {
   return (
-    <section id="gallery" className="relative bg-moss py-24 sm:py-32">
+    <section id="gallery" className="section-shell relative overflow-hidden border-y border-gold/10 bg-moss py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div>
@@ -83,7 +83,7 @@ export function Gallery() {
         <div className="mt-14 grid auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-4">
           {IMAGES.map((image, i) => (
             <Reveal key={image.src} delay={0.05 + i * 0.06} className={image.span}>
-              <figure className="group relative h-full overflow-hidden rounded-2xl border border-cream/10">
+              <figure className="card-lift group relative h-full overflow-hidden rounded-3xl border border-cream/10 bg-fern">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={image.src}

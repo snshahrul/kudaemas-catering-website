@@ -46,6 +46,7 @@ const SERVICES = [
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-gold/15 bg-forest">
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
       <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           {/* Brand */}
@@ -64,7 +65,7 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-cream/55">
-              The golden standard of Malaysian catering — tradisional wedding food, live
+              The golden standard of Malaysian catering — heritage wedding feasts, live
               fire stations and grand buffets for celebrations across Malaysia.
             </p>
             <div className="mt-7 flex gap-3">

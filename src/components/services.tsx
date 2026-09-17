@@ -20,7 +20,7 @@ const SERVICES = [
     icon: Gem,
     title: "Private Celebrations",
     description:
-      "Milestone birthdays, anniversaries, family reunions. A personal chef and butler team staging rijsttafel theater in your own home or villa.",
+      "Milestone birthdays, anniversaries, family reunions. A personal chef and butler team staging heritage feast theater in your own home or villa.",
     tag: "Chef's table at home",
   },
   {
@@ -34,7 +34,8 @@ const SERVICES = [
 
 export function Services() {
   return (
-    <section id="services" className="relative bg-moss py-24 sm:py-32">
+    <section id="services" className="section-shell relative overflow-hidden border-y border-gold/10 bg-moss py-24 sm:py-32">
+      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[80%] -translate-x-1/2 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div>
@@ -66,8 +67,9 @@ export function Services() {
             <Reveal key={service.title} delay={0.08 + i * 0.08} className="h-full">
               <a
                 href="#reserve"
-                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-cream/10 bg-fern p-7 transition-all duration-500 hover:-translate-y-2 hover:border-gold/40 hover:shadow-[0_24px_60px_-20px_rgba(201,162,75,0.35)]"
+                className="card-lift group relative flex h-full flex-col overflow-hidden rounded-3xl border border-cream/10 bg-fern/90 p-7"
               >
+                <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gold/0 blur-2xl transition-all duration-500 group-hover:bg-gold/15" />
                 <div className="flex items-start justify-between">
                   <span className="grid h-12 w-12 place-items-center rounded-full border border-gold/40 bg-gold/10 text-gold transition-all duration-500 group-hover:bg-gold group-hover:text-forest">

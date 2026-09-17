@@ -56,7 +56,7 @@ const STEPS = [
 
 export function QualityManagement() {
   return (
-    <section id="quality" className="relative bg-moss py-24 sm:py-32">
+    <section id="quality" className="section-shell relative overflow-hidden bg-moss py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div>
