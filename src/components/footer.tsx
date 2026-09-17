@@ -29,7 +29,7 @@ function YoutubeIcon({ className = "h-4 w-4" }: { className?: string }) {
 }
 
 const EXPLORE = [
-  { label: "The House", href: "#about" },
+  { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Menus", href: "#menus" },
   { label: "Gallery", href: "#gallery" },
@@ -60,12 +60,12 @@ export function Footer() {
                   Kuda<span className="gold-shimmer">Emas</span>
                 </p>
                 <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.42em] text-gold/80">
-                  Catering House · Est. 2025
+                  Katering · Est. 2025
                 </p>
               </div>
             </div>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-cream/55">
-              The golden standard of Malaysian catering — heritage wedding feasts, live
+              The golden standard of Malaysian katering — heritage wedding feasts, live
               fire stations and grand buffets for celebrations across Malaysia.
             </p>
             <div className="mt-7 flex gap-3">
@@ -152,7 +152,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-cream/10 pt-8 sm:flex-row">
           <p className="text-xs text-cream/40">
-            © {new Date().getFullYear()} KudaEmas Catering House. All rights reserved.
+            © {new Date().getFullYear()} KudaEmas Katering. All rights reserved.
           </p>
           <a
             href="/card"

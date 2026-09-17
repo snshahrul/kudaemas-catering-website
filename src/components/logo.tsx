@@ -36,7 +36,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
             Kuda<span className="gold-shimmer">Emas</span>
           </span>
           <span className="mt-1 block text-[9px] font-bold uppercase tracking-[0.42em] text-gold/80">
-            Catering House
+            Katering
           </span>
         </span>
       )}

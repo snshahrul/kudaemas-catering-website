@@ -114,7 +114,7 @@ export function BookingForm() {
             <div className="flex items-center gap-4">
               <span className="gold-rule w-12" />
               <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-gold">
-                Reserve the House
+                Make a Reservation
               </p>
             </div>
           </Reveal>
@@ -149,7 +149,7 @@ export function BookingForm() {
                 </span>
                 <span>
                   <span className="block text-[9px] font-bold uppercase tracking-[0.3em] text-cream/45">
-                    Call the House
+                    Call Us
                   </span>
                   <span className="text-sm font-semibold text-cream transition-colors group-hover:text-gold">
                     +6011-3979 4166 / +6018-355 1765

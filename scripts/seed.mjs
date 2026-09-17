@@ -55,7 +55,7 @@ const menuItems = [
   {
     name: "Nasi Goreng Kuda Emas",
     description:
-      "Smoked beef fried rice fired in a wok of rendering fat, topped with a 63° egg, krupuk udang and house sambal oelek.",
+      "Smoked beef fried rice fired in a wok of rendering fat, topped with a 63° egg, krupuk udang and signature sambal oelek.",
     category: "Live Stations",
     price: "Rp 42.000 / pax",
     imageUrl:
@@ -112,7 +112,7 @@ const menuItems = [
 const testimonials = [
   {
     name: "Sari & Bimo Wijaya",
-    role: "Wedding of 600 guests · The Glass House, Jakarta",
+    role: "Wedding of 600 guests · The Glass Pavilion, Jakarta",
     quote:
       "KudaEmas did not cater our wedding — they directed it. The grand feast parade gave our guests goosebumps, and six months later people still talk about the rendang. Worth every rupiah.",
     rating: 5,

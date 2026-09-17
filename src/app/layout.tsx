@@ -16,15 +16,15 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "KudaEmas Catering — The Golden Standard of Malaysian Catering",
+  title: "KudaEmas Katering — The Golden Standard of Malaysian Katering",
   description:
-    "Award-winning Malaysian catering house for weddings, corporate summits and private celebrations. Signature grand feasts, live stations and grand buffets across Malaysia since 2025.",
+    "Award-winning Malaysian katering for weddings, corporate summits and private celebrations. Signature grand feasts, live stations and grand buffets across Malaysia since 2025.",
   keywords: [
-    "catering",
-    "Malaysian catering",
-    "wedding catering",
-    "buffet catering Malaysia",
-    "corporate catering",
+    "katering",
+    "Malaysian katering",
+    "wedding katering",
+    "buffet katering Malaysia",
+    "corporate katering",
     "KudaEmas",
   ],
 };

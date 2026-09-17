@@ -78,7 +78,7 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
                   {item.featured && (
                     <span className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-gold px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-forest">
                       <Sparkle className="h-3 w-3" />
-                      House Legend
+                      Signature Legend
                     </span>
                   )}
                   <span className="absolute right-4 top-4 rounded-full border border-gold/40 bg-forest/80 px-3 py-1.5 text-[10px] font-bold tracking-wide text-gold backdrop-blur-sm">
@@ -108,7 +108,7 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
           </AnimatePresence>
         </motion.div>
 
-        {/* Buffet Catering Pricing */}
+        {/* Buffet Katering Pricing */}
         <Reveal delay={0.2}>
           <div className="glass-panel relative mt-16 overflow-hidden rounded-3xl p-8 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.7)] sm:p-10">
             <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
@@ -121,7 +121,7 @@ export function MenuSection({ items }: { items: MenuItem[] }) {
                     <Users className="h-5 w-5" />
                   </span>
                   <h3 className="font-display text-2xl font-medium text-cream">
-                    Buffet Catering
+                    Buffet Katering
                   </h3>
                 </div>
                 <div className="mt-5 flex items-baseline gap-2">

@@ -6,7 +6,7 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Logo } from "./logo";
 
 const LINKS = [
-  { label: "The House", href: "#about" },
+  { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Menus", href: "#menus" },
   { label: "Gallery", href: "#gallery" },
@@ -38,7 +38,7 @@ export function Navbar() {
       >
         <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 sm:px-8">
-          <a href="#top" aria-label="KudaEmas Catering home">
+          <a href="#top" aria-label="KudaEmas Katering home">
             <Logo />
           </a>
 

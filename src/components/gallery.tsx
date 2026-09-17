@@ -10,7 +10,7 @@ const IMAGES = [
   },
   {
     src: "/gallery-2.webp",
-    alt: "Elegant catering setup",
+    alt: "Elegant katering setup",
     caption: "Elegant Setup · Malaysia",
     span: "",
     aspect: "aspect-[4/3]",
@@ -45,7 +45,7 @@ const IMAGES = [
   },
   {
     src: "/gallery-7.png",
-    alt: "Catering event setup",
+    alt: "Katering event setup",
     caption: "Event Setup · Malaysia",
     span: "",
     aspect: "aspect-[4/3]",

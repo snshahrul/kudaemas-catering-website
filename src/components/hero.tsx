@@ -88,12 +88,12 @@ export function Hero() {
         >
           <span className="gold-rule w-14" />
           <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-gold sm:text-xs">
-            Est. 2025 · Malaysian Catering House
+            Est. 2025 · Malaysian Katering
           </p>
         </motion.div>
 
         {/*
-          "The Golden Standard of Catering" — a soft band of light runs left →
+          "The Golden Standard of Katering" — a soft band of light runs left →
           right across every letterform and repeats, like water flowing over the
           words.
 
@@ -131,7 +131,7 @@ export function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 1.1, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="flow-light flow-delay-2 block">of Catering</span>
+              <span className="flow-light flow-delay-2 block">of Katering</span>
             </motion.span>
           </span>
         </h1>
@@ -142,7 +142,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
           className="mt-7 max-w-xl text-base leading-relaxed text-cream/80 sm:text-lg"
         >
-          Malaysia&apos;s premium catering house for weddings, corporate summits
+          Malaysia&apos;s premium katering for weddings, corporate summits
           and private villa celebrations — heritage recipes, live-fire stations
           and flawless five-star service.
         </motion.p>

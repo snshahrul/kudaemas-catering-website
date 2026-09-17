@@ -107,7 +107,7 @@ export function NameCardClient() {
                 Kuda<span className="gold-shimmer">Emas</span>
               </h1>
               <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.5em] text-gold/70">
-                Catering House
+                Katering
               </p>
             </motion.div>
 

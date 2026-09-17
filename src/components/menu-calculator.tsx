@@ -16,6 +16,7 @@ const FOOD_MENU: CatalogItem[] = [
   { name: "Nasi Putih", price: 3.0 },
   { name: "Ayam Masak Merah", price: 7.0 },
   { name: "Ayam Goreng Berempah", price: 7.5 },
+  { name: "Ayam Kurma", price: 3.5 },
   { name: "Daging Rendang", price: 9.0 },
   { name: "Ikan Bakar", price: 8.5 },
   { name: "Udang Harimau", price: 12.0 },
