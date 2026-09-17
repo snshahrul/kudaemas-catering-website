@@ -31,9 +31,9 @@ const menuItems = [
     sortOrder: 2,
   },
   {
-    name: "Nasi Kuning Raja",
+    name: "Nasi Kuning Istimewa",
     description:
-      "Saffron-turmeric coconut rice crowned with serundal, telur balado and our chef's daily opor — a royal breakfast table in every portion.",
+      "Saffron-turmeric coconut rice crowned with serundal, telur balado and our chef's daily opor — a celebratory breakfast table in every portion.",
     category: "Signature Mains",
     price: "Rp 48.000 / pax",
     imageUrl:
@@ -64,9 +64,9 @@ const menuItems = [
     sortOrder: 5,
   },
   {
-    name: "Rijsttafel Nusantara",
+    name: "Nusantara Grand Feast",
     description:
-      "Our table of kings — fourteen dishes from Sabang to Merauke, paraded course by course with a dedicated serving brigade.",
+      "Our grand parade — fourteen dishes from Sabang to Merauke, paraded course by course with a dedicated serving brigade.",
     category: "Feast Packages",
     price: "Rp 185.000 / pax",
     imageUrl:
@@ -114,7 +114,7 @@ const testimonials = [
     name: "Sari & Bimo Wijaya",
     role: "Wedding of 600 guests · The Glass House, Jakarta",
     quote:
-      "KudaEmas did not cater our wedding — they directed it. The rijsttafel parade gave our guests goosebumps, and six months later people still talk about the rendang. Worth every rupiah.",
+      "KudaEmas did not cater our wedding — they directed it. The grand feast parade gave our guests goosebumps, and six months later people still talk about the rendang. Worth every rupiah.",
     rating: 5,
   },
   {
