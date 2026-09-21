@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { HorseMark } from "@/components/logo";
-import { useEffect, useState } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -56,9 +55,6 @@ const LocationIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
 );
 
 export function NameCardClient() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-forest p-4">
       <div className="pointer-events-none absolute inset-0">
@@ -79,7 +75,7 @@ export function NameCardClient() {
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
-        animate={mounted ? { opacity: 1, scale: 1 } : {}}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
         className="relative w-full max-w-sm"
       >
@@ -92,7 +88,7 @@ export function NameCardClient() {
 
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
-            animate={mounted ? { scale: 1, rotate: 0 } : {}}
+            animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 15 }}
             className="relative -mt-16 mx-auto"
           >
@@ -102,7 +98,7 @@ export function NameCardClient() {
           </motion.div>
 
           <div className="relative px-8 pb-8 pt-6 text-center sm:px-10">
-            <motion.div custom={0} variants={fadeUp} initial="hidden" animate={mounted ? "visible" : "hidden"}>
+            <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible">
               <h1 className="font-display text-4xl font-semibold tracking-tight text-cream">
                 Kuda<span className="gold-shimmer">Emas</span>
               </h1>
@@ -111,7 +107,7 @@ export function NameCardClient() {
               </p>
             </motion.div>
 
-            <motion.div custom={1} variants={fadeUp} initial="hidden" animate={mounted ? "visible" : "hidden"}>
+            <motion.div custom={1} variants={fadeUp} initial="hidden" animate="visible">
               <div className="mx-auto mt-6 flex items-center gap-3">
                 <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/30" />
                 <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gold/50">Est. 2025</span>
@@ -123,7 +119,7 @@ export function NameCardClient() {
               custom={2}
               variants={fadeUp}
               initial="hidden"
-              animate={mounted ? "visible" : "hidden"}
+              animate="visible"
               className="mx-auto mt-6 max-w-[280px] text-[13px] leading-relaxed text-cream/55"
             >
               Our team is dedicated to delivering exceptional culinary experiences that leave a lasting impression on your guests.
@@ -133,7 +129,7 @@ export function NameCardClient() {
               custom={3}
               variants={fadeUp}
               initial="hidden"
-              animate={mounted ? "visible" : "hidden"}
+              animate="visible"
               className="mt-6 flex flex-wrap justify-center gap-2"
             >
               {["Weddings Food Arrangements", "Corporate Events", "Live Stations", "Buffets"].map((service) => (
@@ -150,7 +146,7 @@ export function NameCardClient() {
               custom={4}
               variants={fadeUp}
               initial="hidden"
-              animate={mounted ? "visible" : "hidden"}
+              animate="visible"
               className="mx-auto mt-7 h-px w-full bg-gradient-to-r from-transparent via-gold/25 to-transparent"
             />
 
@@ -158,7 +154,7 @@ export function NameCardClient() {
               custom={5}
               variants={fadeUp}
               initial="hidden"
-              animate={mounted ? "visible" : "hidden"}
+              animate="visible"
               className="mt-7 space-y-3"
             >
               <a
@@ -205,7 +201,7 @@ export function NameCardClient() {
               custom={6}
               variants={fadeUp}
               initial="hidden"
-              animate={mounted ? "visible" : "hidden"}
+              animate="visible"
               className="mt-7 flex items-center justify-center gap-4"
             >
               <a
@@ -248,7 +244,7 @@ export function NameCardClient() {
               custom={7}
               variants={fadeUp}
               initial="hidden"
-              animate={mounted ? "visible" : "hidden"}
+              animate="visible"
               className="mt-8"
             >
               <div className="h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />

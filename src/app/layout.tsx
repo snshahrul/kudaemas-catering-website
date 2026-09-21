@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/i18n/LanguageContext";
+import { CalculatorProvider } from "@/components/calculator-context";
+import AssistantWidget from "@/components/AssistantWidget";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -32,7 +35,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${manrope.variable}`}>
-      <body className="grain bg-forest text-cream antialiased">{children}</body>
+      <body className="grain bg-forest text-cream antialiased">
+        <LanguageProvider>
+          <CalculatorProvider>
+            {children}
+            <AssistantWidget />
+          </CalculatorProvider>
+        </LanguageProvider>
+      </body>
     </html>
   );
 }

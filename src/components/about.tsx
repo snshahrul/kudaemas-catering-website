@@ -1,28 +1,27 @@
+"use client";
+
 import { Flame } from "lucide-react";
 import { Reveal, RevealText } from "./reveal";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const PILLARS = [
+const PILLARS_KEYS = [
   {
     number: "01",
-    title: "Uncompromising Quality",
-    description:
-      "We source the freshest, highest-quality ingredients and prepare every dish with precision and passion. We never cut corners, because we know that every bite reflects on you and your event.",
+    key: "about.pillars.quality",
   },
   {
     number: "02",
-    title: "Reliability & Precision",
-    description:
-      "We understand that your event is a once-in-a-lifetime moment for many of your guests. We are committed to being punctual, organized, and detail-oriented, ensuring that your timeline is respected and your event runs seamlessly from setup to breakdown.",
+    key: "about.pillars.reliability",
   },
   {
     number: "03",
-    title: "Personalized Service",
-    description:
-      'We do not believe in "one-size-fits-all." We take the time to listen to your vision, dietary needs, and budget constraints. We are committed to collaborating with you to create a custom menu that tells your story and delights your guests.',
+    key: "about.pillars.personalized",
   },
 ];
 
 export function About() {
+  const { t } = useLanguage();
+
   return (
     <section id="about" className="section-shell relative overflow-hidden py-24 sm:py-32">
       {/* Ghost typography */}
@@ -50,7 +49,7 @@ export function About() {
               <div className="absolute inset-0 bg-gradient-to-t from-forest/60 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl border border-cream/10 bg-forest/70 px-4 py-3 backdrop-blur-md">
                 <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-gold">
-                  Live-fire kitchen
+                  {t("about.badges.kitchen")}
                 </span>
                 <span className="font-display text-sm italic text-cream/80">Est. 2025</span>
               </div>
@@ -71,7 +70,7 @@ export function About() {
             <div className="animate-float-soft flex items-center gap-3 rounded-full border border-gold/30 bg-forest/90 px-5 py-3 shadow-[0_16px_40px_-12px_rgba(201,162,75,0.4)] backdrop-blur-md">
               <Flame className="h-5 w-5 text-gold" />
               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-cream/90">
-                Briyani and its combination
+                {t("about.badges.briyani")}
               </span>
             </div>
           </Reveal>
@@ -83,25 +82,22 @@ export function About() {
             <div className="flex items-center gap-4">
               <span className="gold-rule w-12" />
               <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-gold">
-                Our Commitment
+                {t("about.commitment")}
               </p>
             </div>
           </Reveal>
           <h2 className="mt-6 font-display text-4xl font-medium leading-[1.05] tracking-tight text-cream sm:text-5xl lg:text-6xl">
-            <RevealText text="Our Commitment" />{" "}
-            <RevealText text="to You" delay={0.15} className="italic gold-shimmer" />
+            <RevealText text={t("about.commitment")} />{" "}
+            <RevealText text={t("about.commitmentToYou")} delay={0.15} className="italic gold-shimmer" />
           </h2>
           <Reveal delay={0.25}>
             <p className="mt-7 max-w-xl leading-relaxed text-cream/70">
-              At KudaEmas, we believe that great food is only half the story. The
-              other half is the trust you place in us to deliver an exceptional
-              experience. We are deeply committed to every client we serve, and we
-              uphold that commitment through three core pillars:
+              {t("about.intro")}
             </p>
           </Reveal>
 
           <div className="mt-10 space-y-5">
-            {PILLARS.map((pillar, i) => (
+            {PILLARS_KEYS.map((pillar, i) => (
               <Reveal key={pillar.number} delay={0.3 + i * 0.1}>
                 <div className="card-lift glass-panel rounded-2xl p-6">
                   <div className="flex items-center gap-4">
@@ -109,11 +105,11 @@ export function About() {
                       {pillar.number}
                     </span>
                     <h3 className="font-display text-xl font-medium text-cream">
-                      {pillar.title}
+                      {t(`${pillar.key}.title`)}
                     </h3>
                   </div>
                   <p className="mt-3 leading-relaxed text-cream/60">
-                    {pillar.description}
+                    {t(`${pillar.key}.description`)}
                   </p>
                 </div>
               </Reveal>
@@ -122,16 +118,14 @@ export function About() {
 
           <Reveal delay={0.6}>
             <p className="mt-8 max-w-xl leading-relaxed text-cream/70">
-              We don't just cater events; we build relationships. Your
-              satisfaction is our success, and we are honored to be a part of your
-              special day.
+              {t("about.closing")}
             </p>
           </Reveal>
           <Reveal delay={0.7}>
             <p className="mt-4 font-display text-lg italic text-gold/80">
-              Sincerely,
+              {t("about.sincerely")},
               <br />
-              The Team at KudaEmas
+              {t("about.team")}
             </p>
           </Reveal>
         </div>

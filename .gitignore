@@ -18,6 +18,11 @@
 .DS_Store
 *.pem
 
+# editor / tooling
+.vscode/
+.expo/
+.freebuff/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

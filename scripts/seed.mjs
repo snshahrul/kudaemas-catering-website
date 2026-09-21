@@ -1,180 +1,82 @@
-import "dotenv/config";
+// Seed Postgres: creates tables via drizzle-kit push (run separately) and inserts content.
+// Connection: DATABASE_URL env var (works for Neon and local Postgres alike), or pass
+// the URL as the first CLI argument:  node scripts/seed.mjs "postgresql://..."
 import pg from "pg";
+import { config as loadEnv } from "dotenv";
 
-const { Pool } = pg;
+// Match Next.js env loading (dotenv alone only reads .env).
+loadEnv({ path: [".env.local", ".env.development.local", ".env"], quiet: true });
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+const connectionString = process.argv[2] || process.env.DATABASE_URL;
+
+if (!connectionString || !connectionString.startsWith("postgres")) {
+  console.error("No DATABASE_URL found. Set it in .env.local or pass it as an argument.");
+  process.exit(1);
+}
+
+const isLocal = /localhost|127\.0\.0\.1/.test(connectionString);
+const client = new pg.Client({
+  connectionString,
+  ssl: isLocal ? undefined : { rejectUnauthorized: false },
 });
+await client.connect();
 
 const menuItems = [
-  {
-    name: "Rendang Minang Kuda Emas",
-    description:
-      "Beef short rib slow-braised for eight hours in coconut, galangal and toasted spice paste — finished over smoldering coconut husk until lacquered and dark.",
-    category: "Signature Mains",
-    price: "Rp 68.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/37279765/pexels-photo-37279765.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: true,
-    sortOrder: 1,
-  },
-  {
-    name: "Sate Lilit Bali",
-    description:
-      "Hand-minced snapper and prawn wrapped around lemongrass torches, grilled over coconut charcoal and glazed with sambal matah beurre blanc.",
-    category: "Signature Mains",
-    price: "Rp 52.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/37179934/pexels-photo-37179934.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: true,
-    sortOrder: 2,
-  },
-  {
-    name: "Nasi Kuning Istimewa",
-    description:
-      "Saffron-turmeric coconut rice crowned with serundal, telur balado and our chef's daily opor — a celebratory breakfast table in every portion.",
-    category: "Signature Mains",
-    price: "Rp 48.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/37081081/pexels-photo-37081081.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: false,
-    sortOrder: 3,
-  },
-  {
-    name: "Sate Ayam Madura Station",
-    description:
-      "A live grill where master sateers fan skewers of honey-lacquered chicken over flame, served with peanut kacang and pickled acar.",
-    category: "Live Stations",
-    price: "Rp 45.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/37205362/pexels-photo-37205362.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: true,
-    sortOrder: 4,
-  },
-  {
-    name: "Nasi Goreng Kuda Emas",
-    description:
-      "Smoked beef fried rice fired in a wok of rendering fat, topped with a 63° egg, krupuk udang and signature sambal oelek.",
-    category: "Live Stations",
-    price: "Rp 42.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/37081070/pexels-photo-37081070.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: true,
-    sortOrder: 5,
-  },
-  {
-    name: "Nusantara Grand Feast",
-    description:
-      "Our grand parade — fourteen dishes from Sabang to Merauke, paraded course by course with a dedicated serving brigade.",
-    category: "Feast Packages",
-    price: "Rp 185.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/37068399/pexels-photo-37068399.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: true,
-    sortOrder: 6,
-  },
-  {
-    name: "Grand Wedding Buffet",
-    description:
-      "A golden banquet designed for your first night as hosts — chafing lines, floral styling, carving board and dessert pavilion included.",
-    category: "Feast Packages",
-    price: "Rp 250.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/37976954/pexels-photo-37976954.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: false,
-    sortOrder: 7,
-  },
-  {
-    name: "Bandung Garden High-Tea",
-    description:
-      "Twenty-tier sweet table of kue tradisional, eclairs and pandan chiffon, styled beneath fresh florals for daytime celebrations.",
-    category: "Sweet Finishes",
-    price: "Rp 38.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/38692610/pexels-photo-38692610.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: false,
-    sortOrder: 8,
-  },
-  {
-    name: "Kue Nusantara Petit Fours",
-    description:
-      "Bite-size legacies — klepon, lapis legit, putri salju and onde-onde, reimagined with European pastry discipline.",
-    category: "Sweet Finishes",
-    price: "Rp 35.000 / pax",
-    imageUrl:
-      "https://images.pexels.com/photos/35985243/pexels-photo-35985243.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-    featured: false,
-    sortOrder: 9,
-  },
+  ["Nasi Minyak", "Aromatic ghee rice cooked with pandan, lemongrass and fried shallots — the anchor of every Malay wedding spread.", "Main", "RM5.00", "/gallery-1.webp", true, 1],
+  ["Nasi Briyani", "Long-grain basmati layered with spiced meat curry, saffron milk and fried onions.", "Main", "RM6.00", "/gallery-2.webp", true, 2],
+  ["Ayam Masak Merah", "Chicken braised in a silky chilli-tomato gravy with aromatics — a wedding-table classic.", "Main", "RM7.00", "/gallery-3.png", true, 3],
+  ["Rendang Daging", "Beef slow-braised in coconut and spice paste until dark, dry and deeply caramelised.", "Main", "RM9.00", "/gallery-4.jpg", true, 4],
+  ["Ikan Bakar", "Charcoal-grilled fish glazed with kecap manis, lime and sambal.", "Main", "RM8.50", "/gallery-5.webp", false, 5],
+  ["Udang Harimau", "Tiger prawns wok-tossed in a sweet-spicy sambal sauce.", "Main", "RM12.00", "/gallery-6.png", false, 6],
+  ["Kambing Panggang", "Slow-roasted marinated lamb carved at the carving board.", "Main", "RM14.00", "/gallery-7.png", true, 7],
+  ["Teh O Ais", "Iced black tea — the universal Malaysian table drink.", "Beverage", "RM2.00", "/gallery-1.webp", false, 8],
+  ["Teh Tarik", "Hot pulled tea with a frothy crown.", "Beverage", "RM2.50", "/gallery-2.webp", false, 9],
+  ["Sirap Bandung", "Rose cordial with milk, served chilled.", "Beverage", "RM2.50", "/gallery-3.png", false, 10],
+  ["Air Katira", "Longan, dates and katira gum in a chilled sweet drink.", "Beverage", "RM3.00", "/gallery-4.jpg", false, 11],
+  ["Jus Oren", "Freshly squeezed orange juice.", "Beverage", "RM3.50", "/gallery-5.webp", false, 12],
+  ["Ulam-ulaman", "Raw herb and vegetable platter with sambal belacan.", "Vegetable", "RM3.50", "/gallery-6.png", false, 13],
+  ["Sayur Lodeh", "Mixed vegetables simmered in fragrant coconut gravy.", "Vegetable", "RM3.50", "/gallery-7.png", false, 14],
+  ["Kangkung Belacan", "Water spinach stir-fried with prawn paste and chilli.", "Vegetable", "RM3.00", "/gallery-1.webp", false, 15],
+  ["Acar Jelatah", "Pickled cucumber, carrot and pineapple in a sweet-sour dressing.", "Vegetable", "RM2.50", "/gallery-2.webp", false, 16],
+  ["Kuih-muih Campur", "Assorted traditional Malay kuih selection.", "Dessert", "RM3.00", "/gallery-3.png", true, 17],
+  ["Bubur Kacang Hijau", "Sweet mung bean porridge with coconut milk and pandan.", "Dessert", "RM3.00", "/gallery-4.jpg", false, 18],
+  ["Sago Gula Melaka", "Sago pearls with palm sugar syrup and coconut cream.", "Dessert", "RM3.50", "/gallery-5.webp", false, 19],
+  ["Pengat Pisang", "Bananas simmered in coconut and palm sugar gravy.", "Dessert", "RM3.00", "/gallery-6.png", false, 20],
 ];
 
 const testimonials = [
-  {
-    name: "Sari & Bimo Wijaya",
-    role: "Wedding of 600 guests · The Glass Pavilion, Jakarta",
-    quote:
-      "KudaEmas did not cater our wedding — they directed it. The grand feast parade gave our guests goosebumps, and six months later people still talk about the rendang. Worth every rupiah.",
-    rating: 5,
-  },
-  {
-    name: "Amanda Hartono",
-    role: "Head of Events · Nusantara Tech Summit",
-    quote:
-      "800 delegates, three venues, zero compromise. Their brigade ran like a military operation with the warmth of a family feast. The only vendor our board asks for by name.",
-    rating: 5,
-  },
-  {
-    name: "Daniel Prasetyo",
-    role: "Private client · Uluwatu Cliff Villa",
-    quote:
-      "They turned my mother's 70th into theater — live sate station at sunset, kue tower at midnight. Chef Bayu personally walked every dish to the table. Unforgettable.",
-    rating: 5,
-  },
+  ["Nurul Aisyah", "Bride, Shah Alam · Wedding for 450 pax", "KudaEmas made our wedding feel like a royal banquet. The carving station and the briyani were the two things every guest still talks about.", 5],
+  ["Ahmad Firdaus", "Corporate Services Lead, Kuala Lumpur", "Their team handled a 600-delegate summit lunch with military precision — hot food on time, spotless stations, flawless invoices.", 5],
+  ["Lim Wei Jian", "Homeowner, Petaling Jaya", "We booked the chef's table at home for my father's 70th. Chef came with the whole brigade and the kitchen smelled like a five-star hotel.", 5],
+  ["Siti Halimah", "Community organiser, Klang", "For our mosque fundraiser they catered 350 pax with vegetarian and halal stations, on a very tight budget. Generous, punctual, kind team.", 5],
+  ["Rajesh Kumar", "Product Launch Host, Cyberjaya", "The live satay station became the centrepiece of our launch. Guests queued twice — worth every sen.", 5],
 ];
 
-async function seed() {
-  const client = await pool.connect();
-  try {
-    await client.query("BEGIN");
-    await client.query("DELETE FROM menu_items");
-    await client.query("DELETE FROM testimonials");
-
-    for (const item of menuItems) {
-      await client.query(
-        `INSERT INTO menu_items (name, description, category, price, image_url, featured, sort_order)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [
-          item.name,
-          item.description,
-          item.category,
-          item.price,
-          item.imageUrl,
-          item.featured,
-          item.sortOrder,
-        ],
-      );
-    }
-
-    for (const t of testimonials) {
-      await client.query(
-        `INSERT INTO testimonials (name, role, quote, rating) VALUES ($1, $2, $3, $4)`,
-        [t.name, t.role, t.quote, t.rating],
-      );
-    }
-
-    await client.query("COMMIT");
-    console.log(
-      `Seeded ${menuItems.length} menu items and ${testimonials.length} testimonials.`,
+await client.query("begin");
+try {
+  await client.query("truncate table menu_items restart identity");
+  await client.query("truncate table testimonials restart identity");
+  for (const m of menuItems) {
+    await client.query(
+      `insert into menu_items (name, description, category, price, image_url, featured, sort_order)
+       values ($1,$2,$3,$4,$5,$6,$7)`,
+      m,
     );
-  } catch (error) {
-    await client.query("ROLLBACK");
-    console.error("Seed failed:", error);
-    process.exitCode = 1;
-  } finally {
-    client.release();
-    await pool.end();
   }
+  for (const q of testimonials) {
+    await client.query(
+      `insert into testimonials (name, role, quote, rating) values ($1,$2,$3,$4)`,
+      q,
+    );
+  }
+  await client.query("commit");
+  const m = await client.query("select count(*)::int as n from menu_items");
+  const t = await client.query("select count(*)::int as n from testimonials");
+  console.log(`Seeded menu_items=${m.rows[0].n}, testimonials=${t.rows[0].n}`);
+} catch (e) {
+  await client.query("rollback");
+  console.error("Seed failed:", e.message);
+  process.exitCode = 1;
+} finally {
+  await client.end();
 }
-
-seed();

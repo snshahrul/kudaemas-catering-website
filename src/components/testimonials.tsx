@@ -5,8 +5,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
 import type { Testimonial } from "@/db/schema";
 import { Reveal, RevealText } from "./reveal";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export function Testimonials({ quotes }: { quotes: Testimonial[] }) {
+  const { t } = useLanguage();
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
 
@@ -41,14 +43,14 @@ export function Testimonials({ quotes }: { quotes: Testimonial[] }) {
             <div className="flex items-center justify-center gap-4">
               <span className="gold-rule w-12" />
               <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-gold">
-                Client Stories
+                {t("testimonials.eyebrow")}
               </p>
               <span className="gold-rule w-12" />
             </div>
           </Reveal>
           <h2 className="mt-6 font-display text-4xl font-medium tracking-tight text-cream sm:text-5xl">
-            <RevealText text="Word of mouth," />{" "}
-            <RevealText text="golden thread" delay={0.15} className="italic gold-shimmer" />
+            <RevealText text={t("testimonials.title1")} />{" "}
+            <RevealText text={t("testimonials.title2")} delay={0.15} className="italic gold-shimmer" />
           </h2>
         </div>
 

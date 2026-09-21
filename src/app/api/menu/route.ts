@@ -8,7 +8,7 @@ export async function GET() {
     const items = await db.select().from(menuItems).orderBy(asc(menuItems.sortOrder));
     return NextResponse.json({ ok: true, items });
   } catch (error) {
-    console.error("Failed to load menu:", error);
-    return NextResponse.json({ ok: false, items: [] }, { status: 500 });
+    console.warn("Failed to load menu:", error);
+    return NextResponse.json({ ok: false, items: [] }, { status: 503 });
   }
 }

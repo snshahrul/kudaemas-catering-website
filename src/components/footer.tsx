@@ -1,5 +1,8 @@
+"use client";
+
 import { ArrowUp } from "lucide-react";
 import { HorseMark } from "./logo";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -28,22 +31,9 @@ function YoutubeIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-const EXPLORE = [
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Menus", href: "#menus" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Quality Management", href: "#quality" },
-];
-
-const SERVICES = [
-  "Weddings & Receptions",
-  "Corporate & Summits",
-  "Private Celebrations",
-  "Live Stations & Crew",
-];
-
 export function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="relative overflow-hidden border-t border-gold/15 bg-forest">
       <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
@@ -65,8 +55,7 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-cream/55">
-              The golden standard of Malaysian katering — heritage wedding feasts, live
-              fire stations and grand buffets for celebrations across Malaysia.
+              {t("footer.brandDesc") || "The golden standard of Malaysian katering — heritage wedding feasts, live fire stations and grand buffets for celebrations across Malaysia."}
             </p>
             <div className="mt-7 flex gap-3">
               {[
@@ -89,16 +78,16 @@ export function Footer() {
           {/* Explore */}
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-gold">
-              Explore
+              {t("footer.explore")}
             </p>
             <ul className="mt-5 space-y-3">
-              {EXPLORE.map((link) => (
-                <li key={link.href}>
+              {["about", "services", "menus", "gallery", "quality"].map((key) => (
+                <li key={key}>
                   <a
-                    href={link.href}
+                    href={`#${key}`}
                     className="text-sm text-cream/60 transition-colors hover:text-gold"
                   >
-                    {link.label}
+                    {t(`footer.${key}`)}
                   </a>
                 </li>
               ))}
@@ -108,10 +97,10 @@ export function Footer() {
           {/* Services */}
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-gold">
-              Services
+              {t("footer.servicesTitle")}
             </p>
             <ul className="mt-5 space-y-3">
-              {SERVICES.map((s) => (
+              {t("footer.servicesList").map((s: string) => (
                 <li key={s} className="text-sm text-cream/60">
                   {s}
                 </li>
@@ -122,7 +111,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-gold">
-              The Kitchen
+              {t("footer.kitchen")}
             </p>
             <address className="mt-5 space-y-3 text-sm not-italic leading-relaxed text-cream/60">
               <p>
@@ -137,14 +126,14 @@ export function Footer() {
               <p>
                 <a href="tel:+601139794166" className="transition-colors hover:text-gold">
                    +6011-3979 4166 / +6018-355 1765
-                 </a>
+                </a>
                 <br />
                 <a href="mailto:kudaemas.app@gmail.com" className="transition-colors hover:text-gold">
                    kudaemas.app@gmail.com
-                 </a>
+                </a>
               </p>
               <p className="text-cream/45">
-                Office hours · Mon–Sat, 08.00–20.00 WIB
+                {t("footer.officeHours")}
               </p>
             </address>
           </div>
@@ -152,22 +141,22 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-cream/10 pt-8 sm:flex-row">
           <p className="text-xs text-cream/40">
-            © {new Date().getFullYear()} KudaEmas Katering. All rights reserved.
+            {t("footer.rights").replace("{year}", new Date().getFullYear().toString())}
           </p>
           <a
             href="/card"
             className="font-display text-sm italic text-gold/70 transition-colors hover:text-gold"
           >
-            Digital Business Card
+            {t("footer.digitalCard")}
           </a>
           <p className="font-display text-sm italic text-gold/70">
-            Crafted with fire in Malaysia
+            {t("footer.crafted")}
           </p>
           <a
             href="#top"
             className="group flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em] text-cream/50 transition-colors hover:text-gold"
           >
-            Back to top
+            {t("footer.backToTop")}
             <span className="grid h-8 w-8 place-items-center rounded-full border border-cream/15 transition-all group-hover:border-gold group-hover:bg-gold group-hover:text-forest">
               <ArrowUp className="h-3.5 w-3.5" />
             </span>

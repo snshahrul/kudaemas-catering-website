@@ -40,6 +40,24 @@ export function RevealText({
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const words = text.split(" ");
 
+  /* Gradient-clipped text (gold-shimmer) must not carry descendants with
+     transform/will-change (they create stacking contexts that break
+     background-clip: text), and the scroll-reveal observer is unreliable
+     for these spans — so render them static and visible, like the logo
+     word mark. The CSS light-wave animation still plays. */
+  if (className?.includes("gold-shimmer")) {
+    return (
+      <span ref={ref} className={className}>
+        {words.map((word, i) => (
+          <span key={i} className="inline-block">
+            {word}
+            {i < words.length - 1 ? "\u00A0" : ""}
+          </span>
+        ))}
+      </span>
+    );
+  }
+
   return (
     <span ref={ref} className={className}>
       {words.map((word, i) => (

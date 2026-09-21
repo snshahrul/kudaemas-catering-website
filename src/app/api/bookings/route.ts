@@ -1,14 +1,28 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { bookings } from "@/db/schema";
+import { EVENT_TYPE_VALUES, PACKAGE_VALUES, normalizeEventType, type PackageValue } from "@/lib/booking-options";
 
-const EVENT_TYPES = [
-  "Wedding & Reception",
-  "Corporate & Summit",
-  "Private Celebration",
-  "Government & Institution",
-  "Other",
-];
+/** Normalize a package selection to a canonical value.
+    Accepts canonical values and legacy/localized display labels. */
+function normalizePackage(input: unknown): PackageValue | null {
+  if (typeof input !== "string") return null;
+  const value = input.trim();
+  if ((PACKAGE_VALUES as readonly string[]).includes(value)) {
+    return value as PackageValue;
+  }
+  const aliases: Record<string, PackageValue> = {
+    "Grand Wedding Buffet": "grand-wedding-buffet",
+    "Live Stations Package": "live-stations",
+    "High-Tea & Sweets": "high-tea-sweets",
+    "Custom / Not sure yet": "custom",
+    "Bufet Perkahwinan Agung": "grand-wedding-buffet",
+    "Pakej Stesen Terbuka": "live-stations",
+    "High-Tea & Manisan": "high-tea-sweets",
+    "Tersuai / Belum pasti": "custom",
+  };
+  return aliases[value] ?? null;
+}
 
 export async function POST(request: Request) {
   try {
@@ -27,9 +41,12 @@ export async function POST(request: Request) {
     if (!phone || typeof phone !== "string" || phone.replace(/\D/g, "").length < 8) {
       errors.phone = "A valid phone number is required.";
     }
-    if (!eventType || !EVENT_TYPES.includes(eventType)) {
+
+    const normalizedEventType = normalizeEventType(eventType);
+    if (!normalizedEventType) {
       errors.eventType = "Please choose an event type.";
     }
+
     if (!eventDate || typeof eventDate !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(eventDate)) {
       errors.eventDate = "Please pick your event date.";
     } else {
@@ -49,16 +66,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, errors }, { status: 400 });
     }
 
+    // Non-blocking package normalization: fall back to null on unknown values
+    const normalizedPackage = normalizePackage(pkg);
+
     const [created] = await db
       .insert(bookings)
       .values({
         name: name.trim(),
         email: email.trim().toLowerCase(),
         phone: phone.trim(),
-        eventType,
+        eventType: normalizedEventType!,
         eventDate,
         guests: Math.floor(guestCount),
-        package: typeof pkg === "string" && pkg.trim() ? pkg.trim() : null,
+        package: normalizedPackage,
         message: typeof message === "string" && message.trim() ? message.trim() : null,
       })
       .returning({ id: bookings.id });
@@ -67,7 +87,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Booking submission failed:", error);
     return NextResponse.json(
-      { ok: false, message: "Something went wrong. Please try again." },
+      { ok: false, message: "Something went wrong. On miscommunication, please retry." },
       { status: 500 },
     );
   }
@@ -75,7 +95,7 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const rows = await db.select({ id: bookings.id }).from(bookings);
+    const rows = await db.select({ id: bookings.id, eventType: bookings.eventType }).from(bookings);
     return NextResponse.json({ ok: true, count: rows.length });
   } catch {
     return NextResponse.json({ ok: false, count: 0 }, { status: 500 });

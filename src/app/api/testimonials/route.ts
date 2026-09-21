@@ -11,7 +11,7 @@ export async function GET() {
       .orderBy(desc(testimonials.createdAt));
     return NextResponse.json({ ok: true, quotes });
   } catch (error) {
-    console.error("Failed to load testimonials:", error);
-    return NextResponse.json({ ok: false, quotes: [] }, { status: 500 });
+    console.warn("Failed to load testimonials:", error);
+    return NextResponse.json({ ok: false, quotes: [] }, { status: 503 });
   }
 }

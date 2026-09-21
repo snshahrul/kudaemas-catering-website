@@ -1,396 +1,256 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
-import { Calculator, ChevronDown, Minus, Plus, RotateCcw, Trash2 } from "lucide-react";
-import { Reveal } from "./reveal";
+import { useMemo, useState } from "react";
+import {
+  BadgeCheck,
+  Calculator,
+  ChevronDown,
+  Equal,
+  Info,
+  MousePointerClick,
+  Tag,
+  Users,
+  UtensilsCrossed,
+} from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { CATALOG, TIERS, type CategoryKey, type TierKey } from "@/lib/catalog";
+import { useCalculator } from "./calculator-context";
 
 /* ------------------------------------------------------------------ */
-/*  Menu data                                                          */
+/*  Pax → tier mapping: 100+ gets the bulk rate, 60–100 the mid rate,  */
+/*  anything below 60 the smallest-tier rate.                          */
 /* ------------------------------------------------------------------ */
 
-type CatalogItem = { name: string; price: number };
-
-const FOOD_MENU: CatalogItem[] = [
-  { name: "Nasi Minyak", price: 5.0 },
-  { name: "Nasi Briyani", price: 6.0 },
-  { name: "Nasi Putih", price: 3.0 },
-  { name: "Ayam Masak Merah", price: 7.0 },
-  { name: "Ayam Goreng Berempah", price: 7.5 },
-  { name: "Ayam Kurma", price: 3.5 },
-  { name: "Daging Rendang", price: 9.0 },
-  { name: "Ikan Bakar", price: 8.5 },
-  { name: "Udang Harimau", price: 12.0 },
-  { name: "Sotong Goreng Tepung", price: 10.0 },
-  { name: "Kambing Panggang", price: 14.0 },
-];
-
-const BEVERAGE_MENU: CatalogItem[] = [
-  { name: "Teh O Ais", price: 2.0 },
-  { name: "Kopi O", price: 2.0 },
-  { name: "Sirap Bandung", price: 2.5 },
-  { name: "Air Buah Campur", price: 3.0 },
-  { name: "Air Cordial", price: 2.5 },
-  { name: "Teh Tarik", price: 2.5 },
-  { name: "Air Mineral", price: 1.5 },
-  { name: "Jus Oren", price: 3.5 },
-  { name: "Jus Tembikai", price: 3.5 },
-  { name: "Air Katira", price: 3.0 },
-];
-
-const VEGETABLE_MENU: CatalogItem[] = [
-  { name: "Sayur Campur", price: 3.0 },
-  { name: "Kangkung Belacan", price: 3.0 },
-  { name: "Pucuk Paku Goreng", price: 3.5 },
-  { name: "Terung Goreng", price: 3.0 },
-  { name: "Ulam-ulaman", price: 3.5 },
-  { name: "Salad Sayur", price: 4.0 },
-  { name: "Acar Jelatah", price: 2.5 },
-  { name: "Sayur Lodeh", price: 3.5 },
-  { name: "Kobis Goreng", price: 2.5 },
-  { name: "Taugeh Goreng", price: 2.5 },
-];
-
-const DESSERT_MENU: CatalogItem[] = [
-  { name: "Kuih-muih Campur", price: 3.0 },
-  { name: "Puding Karamel", price: 3.5 },
-  { name: "ABC (Ais Kacang)", price: 3.5 },
-  { name: "Bubur Kacang Hijau", price: 3.0 },
-  { name: "Puding Raja", price: 4.0 },
-  { name: "Buah-buahan Potong", price: 3.5 },
-  { name: "Kek Lapis", price: 4.5 },
-  { name: "Sago Gula Melaka", price: 3.5 },
-  { name: "Pengat Pisang", price: 3.0 },
-  { name: "Cendol", price: 3.5 },
-];
-
-type CategoryKey = "food" | "beverage" | "vegetable" | "dessert";
-
-const CATALOG: Record<CategoryKey, CatalogItem[]> = {
-  food: FOOD_MENU,
-  beverage: BEVERAGE_MENU,
-  vegetable: VEGETABLE_MENU,
-  dessert: DESSERT_MENU,
-};
-
-const CATEGORY_LABELS: Record<CategoryKey, string> = {
-  food: "Food",
-  beverage: "Beverages",
-  vegetable: "Vegetables",
-  dessert: "Desserts",
-};
-
-const CATEGORY_ICONS: Record<CategoryKey, string> = {
-  food: "🍛",
-  beverage: "🥤",
-  vegetable: "🥬",
-  dessert: "🍰",
-};
-
-/* ------------------------------------------------------------------ */
-/*  Row state                                                          */
-/* ------------------------------------------------------------------ */
-
-type Row = {
-  id: number;
-  category: CategoryKey;
-  itemIndex: number; // index into CATALOG[category]
-  qty: number;
-};
-
-let nextId = 1;
-
-function emptyRow(category: CategoryKey = "food"): Row {
-  return { id: nextId++, category, itemIndex: 0, qty: 1 };
+function activeTier(pax: number): TierKey {
+  if (pax > 100) return "tier100";
+  if (pax >= 60) return "tier60";
+  return "tier40";
 }
+
+const DEFAULT_PAX = 100;
+
+const myr = (value: number) =>
+  value.toLocaleString("en-MY", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
 /* ------------------------------------------------------------------ */
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
 export function MenuCalculator() {
-  const [rows, setRows] = useState<Row[]>([
-    emptyRow("food"),
-    emptyRow("beverage"),
-    emptyRow("vegetable"),
-    emptyRow("dessert"),
-  ]);
+  const { t } = useLanguage();
 
-  /* helpers */
-  const update = useCallback(
-    (id: number, patch: Partial<Row>) =>
-      setRows((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r))),
-    [],
-  );
+  const [selection, setSelection] = useState<Record<CategoryKey, number>>({
+    nasi: 0,
+    ayam: 0,
+    daging: 0,
+    veg: 0,
+    buah: 0,
+    dessert: 0,
+  });
+  const [pax, setPax] = useState(DEFAULT_PAX);
+  const { confirm } = useCalculator();
+  const [justConfirmed, setJustConfirmed] = useState(false);
 
-  const remove = useCallback(
-    (id: number) =>
-      setRows((prev) => {
-        if (prev.length <= 1) return prev; // keep at least one row
-        return prev.filter((r) => r.id !== id);
-      }),
-    [],
-  );
+  const dishNames = t("calculator.dishes") as Record<CategoryKey, string[]>;
 
-  const addRow = useCallback(
-    (category: CategoryKey = "food") =>
-      setRows((prev) => [...prev, emptyRow(category)]),
-    [],
-  );
-
-  const reset = useCallback(
-    () =>
-      setRows([
-        emptyRow("food"),
-        emptyRow("beverage"),
-        emptyRow("vegetable"),
-        emptyRow("dessert"),
-      ]),
-    [],
-  );
-
-  /* totals */
-  const categoryTotals = useMemo(() => {
-    const totals: Record<CategoryKey, number> = {
-      food: 0,
-      beverage: 0,
-      vegetable: 0,
-      dessert: 0,
-    };
-    rows.forEach((r) => {
-      const item = CATALOG[r.category][r.itemIndex];
-      totals[r.category] += item.price * r.qty;
+  const tierTotals = useMemo(() => {
+    const totals: Record<TierKey, number> = { tier100: 0, tier60: 0, tier40: 0 };
+    CATALOG.forEach((category) => {
+      const dish = category.dishes[selection[category.key]];
+      TIERS.forEach(({ key: tier }) => {
+        totals[tier] += dish.price[tier];
+      });
     });
     return totals;
-  }, [rows]);
+  }, [selection]);
 
-  const grandTotal = useMemo(
-    () => Object.values(categoryTotals).reduce((a, b) => a + b, 0),
-    [categoryTotals],
-  );
+  const safePax = Math.max(1, Math.floor(pax) || 1);
+  const appliedTier = activeTier(safePax);
+  const grandTotal = tierTotals[appliedTier] * safePax;
 
-  /* ---------------------------------------------------------------- */
-  /*  Render                                                           */
-  /* ---------------------------------------------------------------- */
+  const selectDish = (key: CategoryKey, index: number) =>
+    setSelection((prev) => ({ ...prev, [key]: index }));
+
+  const onPaxChange = (value: string) => {
+    if (value === "") {
+      setPax(0); // render as 1, but keep field empty while typing
+      return;
+    }
+    setPax(Math.max(0, Math.floor(Number(value) || 0)));
+  };
+
+  const onConfirm = () => {
+    confirm(selection, safePax);
+    setJustConfirmed(true);
+    window.setTimeout(() => setJustConfirmed(false), 2500);
+  };
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-gold/25 bg-fern/80 backdrop-blur-sm">
+    <div className="overflow-hidden rounded-3xl border border-gold/25 bg-fern/80 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.45)] backdrop-blur-sm">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-gold/15 bg-pine/30 px-6 py-5 sm:px-8">
-        <div className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-gold/10 text-gold">
-            <Calculator className="h-5 w-5" />
-          </span>
-          <div>
-            <h3 className="font-display text-xl font-medium text-cream sm:text-2xl">
-              Menu Calculator
-            </h3>
-            <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.3em] text-gold/60">
-              Foods &amp; Beverages
-            </p>
-          </div>
-        </div>
-        <button
-          onClick={reset}
-          className="flex items-center gap-1.5 rounded-full border border-cream/15 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cream/60 transition-all hover:border-gold/40 hover:text-gold"
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-          Reset
-        </button>
+      <div className="flex items-center gap-3 border-b border-gold/15 bg-pine/30 px-6 py-5 sm:px-8">
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gold/10 text-gold">
+          <UtensilsCrossed className="h-6 w-6" />
+        </span>
+        <h3 className="font-display text-xl font-medium tracking-tight text-cream sm:text-2xl">
+          {t("calculator.title")}
+        </h3>
+        <span className="ml-auto hidden items-center gap-2 rounded-full border border-gold/20 bg-pine/50 px-4 py-2 text-xs font-medium text-cream/70 sm:flex">
+          <Users className="h-3.5 w-3.5 text-gold/80" />
+          {t("calculator.groupSize")}
+        </span>
       </div>
 
-      {/* Rows */}
-      <div className="space-y-0 divide-y divide-cream/5 px-6 py-4 sm:px-8">
-        {rows.map((row) => {
-          const catalog = CATALOG[row.category];
-          const selectedItem = catalog[row.itemIndex];
-          const lineTotal = selectedItem.price * row.qty;
+      {/* Table */}
+      <div className="mt-6 overflow-x-auto px-4 sm:px-6">
+        <table className="w-full min-w-[720px] overflow-hidden rounded-2xl border border-gold/15 text-sm">
+          <thead>
+            <tr className="bg-pine/60 text-cream">
+              <th className="px-5 py-4 text-left font-semibold tracking-wide">
+                {t("calculator.menuCategory")}
+              </th>
+              {TIERS.map(({ key: tier }) => (
+                <th key={tier} className="px-3 py-4 text-center font-semibold tracking-wide">
+                  <span className="block whitespace-nowrap">{t(`calculator.${tier}`)}</span>
+                  <span className="mt-1 inline-block rounded-full border border-gold/30 bg-gold/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold">
+                    {t(`calculator.${tier}Badge`)}
+                  </span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {CATALOG.map((category) => (
+              <tr
+                key={category.key}
+                className="border-t border-gold/10 transition-colors hover:bg-pine/20"
+              >
+                <td className="bg-forest/50 px-5 py-4">
+                  <div className="relative">
+                    <select
+                      value={selection[category.key]}
+                      onChange={(e) => selectDish(category.key, Number(e.target.value))}
+                      aria-label={dishNames[category.key][selection[category.key]]}
+                      className="w-full max-w-[230px] cursor-pointer appearance-none rounded-xl border border-gold/25 bg-fern py-2.5 pl-4 pr-10 text-sm font-semibold text-cream outline-none transition-all hover:border-gold/50 focus:border-gold focus:ring-1 focus:ring-gold/30"
+                    >
+                      {category.dishes.map((dish, i) => (
+                        <option key={dish.slug} value={i} className="bg-fern text-cream">
+                          {dishNames[category.key][i] ?? dish.name}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gold/60" />
+                  </div>
+                </td>
+                {TIERS.map(({ key: tier }) => (
+                  <td key={tier} className="px-3 py-4 text-center">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/25 bg-gold/10 px-4 py-1.5 text-sm font-bold text-gold-soft">
+                      <Tag className="h-3.5 w-3.5 text-gold/60" />
+                      {category.dishes[selection[category.key]].price[tier].toFixed(2)}
+                    </span>
+                  </td>
+                ))}
+              </tr>
+            ))}
 
-          return (
-            <div key={row.id} className="py-4 first:pt-2 last:pb-2">
-              {/* Category label */}
-              <div className="mb-3 flex items-center gap-2">
-                <span className="text-base">{CATEGORY_ICONS[row.category]}</span>
-                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gold/70">
-                  {CATEGORY_LABELS[row.category]}
+            {/* Total per pax row — each tier sums its own prices */}
+            <tr className="border-y border-gold/25 bg-pine/40">
+              <td className="px-5 py-4 text-left">
+                <span className="flex items-center gap-2 font-display text-base font-semibold text-gold">
+                  <Calculator className="h-4 w-4" />
+                  {t("calculator.totalPerPax")}
                 </span>
-              </div>
-
-              {/* Controls row */}
-              <div className="flex flex-wrap items-end gap-3">
-                {/* Category dropdown */}
-                <div className="w-full sm:w-auto">
-                  <label className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.2em] text-cream/40">
-                    Category
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={row.category}
-                      onChange={(e) =>
-                        update(row.id, {
-                          category: e.target.value as CategoryKey,
-                          itemIndex: 0,
-                        })
-                      }
-                      className="w-full appearance-none rounded-xl border border-cream/15 bg-forest/60 px-4 py-2.5 pr-10 text-sm text-cream outline-none transition-all focus:border-gold/50 focus:ring-1 focus:ring-gold/30 sm:w-44"
-                    >
-                      {(Object.keys(CATEGORY_LABELS) as CategoryKey[]).map((key) => (
-                        <option key={key} value={key}>
-                          {CATEGORY_ICONS[key]} {CATEGORY_LABELS[key]}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-cream/40" />
-                  </div>
-                </div>
-
-                {/* Item dropdown */}
-                <div className="flex-1 min-w-[200px]">
-                  <label className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.2em] text-cream/40">
-                    Menu Item
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={row.itemIndex}
-                      onChange={(e) =>
-                        update(row.id, { itemIndex: Number(e.target.value) })
-                      }
-                      className="w-full appearance-none rounded-xl border border-cream/15 bg-forest/60 px-4 py-2.5 pr-10 text-sm text-cream outline-none transition-all focus:border-gold/50 focus:ring-1 focus:ring-gold/30"
-                    >
-                      {catalog.map((item, i) => (
-                        <option key={i} value={i}>
-                          {item.name} — RM{item.price.toFixed(2)}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-cream/40" />
-                  </div>
-                </div>
-
-                {/* Price per pax (read-only) */}
-                <div className="w-full sm:w-auto">
-                  <label className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.2em] text-cream/40">
-                    Price / Pax
-                  </label>
-                  <div className="rounded-xl border border-gold/20 bg-gold/5 px-4 py-2.5 text-sm font-semibold text-gold">
-                    RM {selectedItem.price.toFixed(2)}
-                  </div>
-                </div>
-
-                {/* Quantity */}
-                <div className="w-full sm:w-auto">
-                  <label className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.2em] text-cream/40">
-                    Qty (Pax)
-                  </label>
-                  <div className="flex items-center gap-0 overflow-hidden rounded-xl border border-cream/15">
-                    <button
-                      onClick={() =>
-                        update(row.id, { qty: Math.max(1, row.qty - 5) })
-                      }
-                      className="grid h-[42px] w-10 place-items-center bg-pine/40 text-cream/60 transition-colors hover:bg-gold/10 hover:text-gold"
-                    >
-                      <Minus className="h-3.5 w-3.5" />
-                    </button>
-                    <input
-                      type="number"
-                      min={1}
-                      value={row.qty}
-                      onChange={(e) =>
-                        update(row.id, {
-                          qty: Math.max(1, Number(e.target.value) || 1),
-                        })
-                      }
-                      className="h-[42px] w-16 border-x border-cream/15 bg-forest/60 text-center text-sm font-semibold text-cream outline-none focus:bg-forest"
-                    />
-                    <button
-                      onClick={() => update(row.id, { qty: row.qty + 5 })}
-                      className="grid h-[42px] w-10 place-items-center bg-pine/40 text-cream/60 transition-colors hover:bg-gold/10 hover:text-gold"
-                    >
-                      <Plus className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Line total */}
-                <div className="w-full sm:w-auto sm:ml-auto">
-                  <label className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.2em] text-cream/40">
-                    Total
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <div className="rounded-xl border border-cream/10 bg-pine/30 px-4 py-2.5 text-sm font-bold text-cream">
-                      RM {lineTotal.toFixed(2)}
-                    </div>
-                    <button
-                      onClick={() => remove(row.id)}
-                      className="grid h-[42px] w-10 place-items-center rounded-xl border border-cream/10 text-cream/30 transition-all hover:border-red-500/40 hover:text-red-400"
-                      title="Remove item"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+              </td>
+              {TIERS.map(({ key: tier }) => (
+                <td key={tier} className="px-3 py-4 text-center">
+                  <span
+                    className={[
+                      "inline-block rounded-full border px-4 py-1.5 text-base font-bold transition-all",
+                      tier === appliedTier
+                        ? "border-gold bg-gold/25 text-gold-bright shadow-[0_0_16px_rgba(201,162,75,0.25)]"
+                        : "border-gold/40 bg-gold/15 text-gold",
+                    ].join(" ")}
+                  >
+                    MYR {tierTotals[tier].toFixed(2)}
+                  </span>
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      {/* Add row button */}
-      <div className="border-t border-cream/5 px-6 py-4 sm:px-8">
-        <div className="flex flex-wrap gap-2">
-          {(Object.keys(CATEGORY_LABELS) as CategoryKey[]).map((cat) => (
-            <button
-              key={cat}
-              onClick={() => addRow(cat)}
-              className="flex items-center gap-1.5 rounded-full border border-cream/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-cream/50 transition-all hover:border-gold/40 hover:text-gold"
-            >
-              <Plus className="h-3 w-3" />
-              {CATEGORY_LABELS[cat]}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Summary / Grand Total */}
-      <div className="border-t border-gold/15 bg-pine/20 px-6 py-6 sm:px-8">
-        {/* Category breakdown */}
-        <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {(Object.keys(CATEGORY_LABELS) as CategoryKey[]).map((cat) => (
-            <div
-              key={cat}
-              className="rounded-xl border border-cream/8 bg-forest/40 px-4 py-3"
-            >
-              <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-cream/40">
-                {CATEGORY_ICONS[cat]} {CATEGORY_LABELS[cat]}
-              </p>
-              <p className="mt-1 text-lg font-bold text-cream">
-                RM {categoryTotals[cat].toFixed(2)}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Grand total */}
-        <div className="flex items-center justify-between rounded-2xl border border-gold/30 bg-gold/5 px-6 py-5">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold/70">
-              Grand Total
-            </p>
-            <p className="mt-1 font-display text-3xl font-semibold text-gold sm:text-4xl">
-              RM {grandTotal.toFixed(2)}
-            </p>
+      {/* Grand total */}
+      <div className="mx-4 mt-6 mb-6 sm:mx-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-gold/30 bg-pine/40 px-5 py-5 sm:px-7">
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="flex items-center gap-2 font-display text-base font-semibold text-cream">
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-gold/10 text-gold">
+                <Calculator className="h-4.5 w-4.5" />
+              </span>
+              {t("calculator.totalPax")}
+            </span>
+            <label className="flex items-center gap-2 rounded-xl border border-gold/30 bg-forest/70 py-1.5 pl-4 pr-1.5">
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-cream/60">
+                <Users className="h-3.5 w-3.5 text-gold/70" />
+                {t("calculator.quantity")}
+              </span>
+              <input
+                type="number"
+                min={1}
+                step={1}
+                value={pax || ""}
+                onChange={(e) => onPaxChange(e.target.value)}
+                aria-label={t("calculator.totalPax")}
+                className="w-20 rounded-lg bg-gold/5 py-2 text-center text-base font-bold text-cream outline-none transition-all focus:bg-gold/10 focus:ring-1 focus:ring-gold/40"
+              />
+            </label>
           </div>
-          <a
-            href="#reserve"
-            className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-forest transition-all hover:bg-gold-soft"
-          >
-            Book Now
-            <Plus className="h-3.5 w-3.5 rotate-45" />
-          </a>
-        </div>
 
-        <p className="mt-4 text-center text-[10px] text-cream/35">
-          * Prices are estimates. Final pricing confirmed upon booking.
-        </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="flex items-center gap-1.5 rounded-full border border-gold/20 bg-forest/60 px-4 py-2 text-xs font-medium text-cream/60">
+              <Equal className="h-3.5 w-3.5 text-gold/80" />
+              {t("calculator.formula")} {safePax} {t("calculator.paxSuffix")}
+            </span>
+            <span className="rounded-2xl border border-gold/40 bg-gold/10 px-6 py-3 font-display text-2xl font-bold tracking-tight text-gold shadow-[0_4px_12px_rgba(0,0,0,0.3)] sm:text-3xl">
+              <span className="mr-1.5 text-sm font-semibold text-cream/60">MYR</span>
+              {myr(grandTotal)}
+            </span>
+            <button
+              type="button"
+              onClick={onConfirm}
+              className="btn-sheen group flex items-center gap-2.5 rounded-full bg-gold px-6 py-3.5 text-[10px] font-bold uppercase tracking-[0.25em] text-forest transition-all duration-300 hover:bg-gold-bright hover:shadow-[0_0_36px_rgba(201,162,75,0.45)]"
+            >
+              {justConfirmed ? (
+                <>
+                  <BadgeCheck className="h-4 w-4" />
+                  {t("calculator.confirmed")}
+                </>
+              ) : (
+                <>
+                  <BadgeCheck className="h-4 w-4" />
+                  {t("calculator.confirmSelection")}
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer notes */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gold/15 bg-pine/20 px-6 py-4 text-xs text-cream/50 sm:px-8">
+        <span className="flex items-center gap-1.5">
+          <Info className="h-3.5 w-3.5 text-gold/70" />
+          {t("calculator.note1")}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <MousePointerClick className="h-3.5 w-3.5 text-gold/70" />
+          {t("calculator.note2")}
+        </span>
+        <span className="text-cream/30">{t("calculator.disclaimer")}</span>
       </div>
     </div>
   );
