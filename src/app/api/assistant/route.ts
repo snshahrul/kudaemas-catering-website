@@ -4,8 +4,6 @@ import { CATALOG } from '@/lib/catalog';
 
 export const runtime = 'nodejs';
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 /* ------------------------------------------------------------------ */
 /*  Real business facts — single source of truth shared with the site. */
 /* ------------------------------------------------------------------ */
@@ -89,6 +87,8 @@ export async function POST(req: NextRequest) {
     if (messages.length === 0) {
       return NextResponse.json({ error: 'No messages provided.' }, { status: 400 });
     }
+
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
