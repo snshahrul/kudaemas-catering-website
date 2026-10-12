@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { bookings } from "@/db/schema";
 import { EVENT_TYPE_VALUES, PACKAGE_VALUES, normalizeEventType, type PackageValue } from "@/lib/booking-options";
-import { sendBookingNotification } from "@/lib/email";
+import { sendBookingNotification, sendBookingConfirmation } from "@/lib/email";
 
 /** Normalize a package selection to a canonical value.
     Accepts canonical values and legacy/localized display labels. */
@@ -84,23 +84,29 @@ export async function POST(request: Request) {
       })
       .returning({ id: bookings.id });
 
-    // Fire-and-forget email notification — an email outage must never block or
-    // fail the booking that was already persisted.
-    void sendBookingNotification(
-      {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        phone: phone.trim(),
-        eventType: normalizedEventType!,
-        eventDate,
-        guests: Math.floor(guestCount),
-        package: normalizedPackage,
-        message: typeof message === "string" && message.trim() ? message.trim() : null,
-      },
-      created.id,
-    ).then((result) => {
+    // Fire-and-forget emails — an email outage must never block or fail the
+    // booking that was already persisted. One to the operator inbox, one to
+    // the customer with their KE- reference.
+    const notifyPayload = {
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      phone: phone.trim(),
+      eventType: normalizedEventType!,
+      eventDate,
+      guests: Math.floor(guestCount),
+      package: normalizedPackage,
+      message: typeof message === "string" && message.trim() ? message.trim() : null,
+    };
+
+    void sendBookingNotification(notifyPayload, created.id).then((result) => {
       if (!result.ok) {
         console.error("Booking email notification failed:", result.error);
+      }
+    });
+
+    void sendBookingConfirmation(notifyPayload, created.id).then((result) => {
+      if (!result.ok) {
+        console.error("Booking confirmation email failed:", result.error);
       }
     });
 
