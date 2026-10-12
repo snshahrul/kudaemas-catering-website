@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { bookings } from "@/db/schema";
 import { EVENT_TYPE_VALUES, PACKAGE_VALUES, normalizeEventType, type PackageValue } from "@/lib/booking-options";
+import { sendBookingNotification } from "@/lib/email";
 
 /** Normalize a package selection to a canonical value.
     Accepts canonical values and legacy/localized display labels. */
@@ -82,6 +83,26 @@ export async function POST(request: Request) {
         message: typeof message === "string" && message.trim() ? message.trim() : null,
       })
       .returning({ id: bookings.id });
+
+    // Fire-and-forget email notification — an email outage must never block or
+    // fail the booking that was already persisted.
+    void sendBookingNotification(
+      {
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        phone: phone.trim(),
+        eventType: normalizedEventType!,
+        eventDate,
+        guests: Math.floor(guestCount),
+        package: normalizedPackage,
+        message: typeof message === "string" && message.trim() ? message.trim() : null,
+      },
+      created.id,
+    ).then((result) => {
+      if (!result.ok) {
+        console.error("Booking email notification failed:", result.error);
+      }
+    });
 
     return NextResponse.json({ ok: true, id: created.id }, { status: 201 });
   } catch (error) {

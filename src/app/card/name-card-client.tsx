@@ -1,7 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { HorseMark } from "@/components/logo";
+
+const CARD_URL = "https://www.kateringkudaemas.com/card";
+const WHATSAPP_SHARE_URL = `https://wa.me/?text=${encodeURIComponent(
+  "Check out Katering KudaEmas 🐴 — menus, pricing & booking:" + " " + CARD_URL + " /card",
+)}`;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -54,7 +60,23 @@ const LocationIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   </svg>
 );
 
+const ShareIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M12 2v13m0-13l5 5m-5-5L7 7" />
+    <path d="M4 14v5a2 2 0 002 2h12a2 2 0 002-2v-5" />
+  </svg>
+);
+
+const ContactCardIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <path d="M3 10h18M7 15h4" />
+  </svg>
+);
+
 export function NameCardClient() {
+  const [qrOpen, setQrOpen] = useState(false);
+
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-forest p-4">
       <div className="pointer-events-none absolute inset-0">
@@ -250,6 +272,84 @@ export function NameCardClient() {
 
             <motion.div
               custom={7}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="mt-8"
+            >
+              <div className="rounded-2xl border border-gold/20 bg-gold/5 p-5">
+                <p className="text-center text-[9px] font-bold uppercase tracking-[0.35em] text-gold/70">
+                  {qrOpen ? "Scan to save contact" : "Tap to show QR"}
+                </p>
+
+                {/* Tappable QR toggle — image hidden until tapped */}
+                <button
+                  type="button"
+                  onClick={() => setQrOpen((o) => !o)}
+                  aria-expanded={qrOpen}
+                  aria-controls="card-qr"
+                  className="mx-auto mt-3 flex w-[140px] cursor-pointer items-center justify-center"
+                  aria-label={qrOpen ? "Hide QR code" : "Show QR code"}
+                >
+                  <AnimatePresence initial={false}>
+                    {qrOpen ? (
+                      <motion.span
+                        key="qr"
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.85 }}
+                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                        className="block"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          id="card-qr"
+                          src="/katering-kudaemas-card-qr.svg"
+                          alt="QR code linking to the Katering KudaEmas digital business card"
+                          width={140}
+                          height={140}
+                          className="block w-[140px] rounded-lg bg-white p-1.5"
+                        />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="qr-hidden"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="grid h-[140px] w-full place-items-center rounded-lg border border-dashed border-gold/40 text-gold/60"
+                      >
+                        <ContactCardIcon className="h-8 w-8" />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
+                <p className="mt-2 text-center text-[9px] font-semibold uppercase tracking-[0.25em] text-gold/50">
+                  {qrOpen ? "Tap to hide" : "Tap to show"}
+                </p>
+                <a
+                  href={WHATSAPP_SHARE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-4 flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-[#1da855] hover:shadow-[0_0_24px_rgba(37,211,102,0.35)]"
+                >
+                  <ShareIcon className="h-3.5 w-3.5" />
+                  Share via WhatsApp
+                </a>
+                <a
+                  href="/api/card/vcf"
+                  download="Katering-KudaEmas.vcf"
+                  className="group mt-2.5 flex items-center justify-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-gold transition-all duration-300 hover:bg-gold hover:text-forest"
+                >
+                  <ContactCardIcon className="h-3.5 w-3.5" />
+                  Save Contact
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              custom={8}
               variants={fadeUp}
               initial="hidden"
               animate="visible"
