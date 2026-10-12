@@ -4,6 +4,8 @@ import { bookings } from "@/db/schema";
 import { EVENT_TYPE_VALUES, PACKAGE_VALUES, normalizeEventType, type PackageValue } from "@/lib/booking-options";
 import { sendBookingNotification, sendBookingConfirmation } from "@/lib/email";
 
+const EMAIL_DEBUG = process.env.EMAIL_DEBUG === "1";
+
 /** Normalize a package selection to a canonical value.
     Accepts canonical values and legacy/localized display labels. */
 function normalizePackage(input: unknown): PackageValue | null {
@@ -86,7 +88,8 @@ export async function POST(request: Request) {
 
     // Fire-and-forget emails — an email outage must never block or fail the
     // booking that was already persisted. One to the operator inbox, one to
-    // the customer with their KE- reference.
+    // the customer with their KE- reference. With EMAIL_DEBUG=1 the sends are
+    // awaited and surfaced in the 201 body so failures are diagnosable.
     const notifyPayload = {
       name: name.trim(),
       email: email.trim().toLowerCase(),
@@ -97,6 +100,15 @@ export async function POST(request: Request) {
       package: normalizedPackage,
       message: typeof message === "string" && message.trim() ? message.trim() : null,
     };
+
+    if (EMAIL_DEBUG) {
+      const notify = await sendBookingNotification(notifyPayload, created.id);
+      const confirm = await sendBookingConfirmation(notifyPayload, created.id);
+      return NextResponse.json(
+        { ok: true, id: created.id, debug: { notify, confirm } },
+        { status: 201 },
+      );
+    }
 
     void sendBookingNotification(notifyPayload, created.id).then((result) => {
       if (!result.ok) {
