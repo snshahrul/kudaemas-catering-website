@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { desc } from "drizzle-orm";
 import { db } from "@/db";
-import { bookings } from "@/db/schema";
+import { bookings, type Booking } from "@/db/schema";
 import { SESSION_COOKIE, checkSessionToken } from "@/lib/bookings-auth";
 import { LoginGate } from "./login-gate";
 import { BookingsTable, SignOutButton, ExportCsvButton } from "./bookings-table";
+import { STATUS_VALUES, type Status } from "@/lib/booking-status";
 
 export const metadata: Metadata = {
   title: "Bookings Dashboard | Katering KudaEmas",
@@ -29,7 +30,7 @@ export default async function BookingsPage() {
     return <LoginGate />;
   }
 
-  let rows: Awaited<ReturnType<typeof getBookings>>;
+  let rows: Booking[];
   try {
     rows = await getBookings();
   } catch (error) {
@@ -43,6 +44,11 @@ export default async function BookingsPage() {
       </main>
     );
   }
+
+  // Pipeline snapshot for the header counters (single pass over loaded rows).
+  const counts = Object.fromEntries(
+    STATUS_VALUES.map((s) => [s, rows.filter((r) => r.status === s).length]),
+  ) as Record<Status, number>;
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-8">
@@ -63,6 +69,21 @@ export default async function BookingsPage() {
           <SignOutButton />
         </div>
       </header>
+
+      {/* Pipeline counters — computed from the rows actually listed below */}
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+        {STATUS_VALUES.map((s) => (
+          <div
+            key={s}
+            className="rounded-2xl border border-gold/15 bg-fern/60 px-4 py-3"
+          >
+            <p className="font-display text-2xl font-bold text-cream">{counts[s]}</p>
+            <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-cream/45">
+              {s}
+            </p>
+          </div>
+        ))}
+      </div>
 
       <BookingsTable rows={rows} />
     </main>

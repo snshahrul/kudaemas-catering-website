@@ -3,17 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { LogOut, Phone, ChevronDown, Loader2, Download } from "lucide-react";
-
-export const STATUS_VALUES = ["new", "contacted", "quoted", "won", "lost"] as const;
-type Status = (typeof STATUS_VALUES)[number];
-
-const STATUS_STYLES: Record<Status, string> = {
-  new: "bg-gold/15 text-gold",
-  contacted: "bg-sky-500/15 text-sky-300",
-  quoted: "bg-violet-500/15 text-violet-300",
-  won: "bg-emerald-500/15 text-emerald-300",
-  lost: "bg-clay/25 text-clay",
-};
+import { STATUS_VALUES, STATUS_STYLES, type Status } from "@/lib/booking-status";
 
 export type BookingRow = {
   id: number;
