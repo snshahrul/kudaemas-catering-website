@@ -4,8 +4,6 @@ import { bookings } from "@/db/schema";
 import { EVENT_TYPE_VALUES, PACKAGE_VALUES, normalizeEventType, type PackageValue } from "@/lib/booking-options";
 import { sendBookingNotification, sendBookingConfirmation } from "@/lib/email";
 
-const EMAIL_DEBUG = process.env.EMAIL_DEBUG === "1";
-
 /** Normalize a package selection to a canonical value.
     Accepts canonical values and legacy/localized display labels. */
 function normalizePackage(input: unknown): PackageValue | null {
@@ -101,26 +99,20 @@ export async function POST(request: Request) {
       message: typeof message === "string" && message.trim() ? message.trim() : null,
     };
 
-    if (EMAIL_DEBUG) {
-      const notify = await sendBookingNotification(notifyPayload, created.id);
-      const confirm = await sendBookingConfirmation(notifyPayload, created.id);
-      return NextResponse.json(
-        { ok: true, id: created.id, debug: { notify, confirm } },
-        { status: 201 },
-      );
+    // Send both emails before responding — verified on Vercel serverless that
+    // fire-and-forget (void …) sends get frozen when the function returns,
+    // so both must be awaited. Two Resend calls add ~200–400 ms. If latency
+    // ever matters, move this to a queue/webhook instead of unawaiting it.
+    const notify = await sendBookingNotification(notifyPayload, created.id);
+    const confirm = await sendBookingConfirmation(notifyPayload, created.id);
+    if (!notify.ok) {
+      console.error("Booking email notification failed:", notify.error);
+    }
+    if (!confirm.ok) {
+      console.error("Booking confirmation email failed:", confirm.error);
     }
 
-    void sendBookingNotification(notifyPayload, created.id).then((result) => {
-      if (!result.ok) {
-        console.error("Booking email notification failed:", result.error);
-      }
-    });
-
-    void sendBookingConfirmation(notifyPayload, created.id).then((result) => {
-      if (!result.ok) {
-        console.error("Booking confirmation email failed:", result.error);
-      }
-    });
+    return NextResponse.json({ ok: true, id: created.id }, { status: 201 });
 
     return NextResponse.json({ ok: true, id: created.id }, { status: 201 });
   } catch (error) {
