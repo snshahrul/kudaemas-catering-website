@@ -6,6 +6,7 @@ import {
   Calculator,
   ChevronDown,
   Equal,
+  Flame,
   Info,
   MousePointerClick,
   Tag,
@@ -13,7 +14,7 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { CATALOG, TIERS, type CategoryKey, type TierKey } from "@/lib/catalog";
+import { CATALOG, LIVE_STATIONS, TIERS, type CategoryKey, type TierKey } from "@/lib/catalog";
 import { useCalculator } from "./calculator-context";
 
 /* ------------------------------------------------------------------ */
@@ -51,6 +52,9 @@ export function MenuCalculator() {
     dessert: 0,
   });
   const [pax, setPax] = useState(DEFAULT_PAX);
+  const [satePrice, setSatePrice] = useState<Record<string, number>>(
+    Object.fromEntries(LIVE_STATIONS.map((s) => [s.slug, s.price.tier100])),
+  );
   const { confirm } = useCalculator();
   const [justConfirmed, setJustConfirmed] = useState(false);
 
@@ -64,8 +68,14 @@ export function MenuCalculator() {
         totals[tier] += dish.price[tier];
       });
     });
+    LIVE_STATIONS.forEach((station) => {
+      const price = satePrice[station.slug] ?? 0;
+      TIERS.forEach(({ key: tier }) => {
+        totals[tier] += price;
+      });
+    });
     return totals;
-  }, [selection]);
+  }, [selection, satePrice]);
 
   const safePax = Math.max(1, Math.floor(pax) || 1);
   const appliedTier = activeTier(safePax);
@@ -82,8 +92,16 @@ export function MenuCalculator() {
     setPax(Math.max(0, Math.floor(Number(value) || 0)));
   };
 
+  const onSatePriceChange = (slug: string, value: string) => {
+    if (value === "") {
+      setSatePrice((prev) => ({ ...prev, [slug]: 0 }));
+      return;
+    }
+    setSatePrice((prev) => ({ ...prev, [slug]: Math.max(0, Number(value) || 0) }));
+  };
+
   const onConfirm = () => {
-    confirm(selection, safePax);
+    confirm(selection, safePax, satePrice);
     setJustConfirmed(true);
     window.setTimeout(() => setJustConfirmed(false), 2500);
   };
@@ -153,6 +171,44 @@ export function MenuCalculator() {
                     </span>
                   </td>
                 ))}
+              </tr>
+            ))}
+
+            {/* Live stations — per-stick price chosen by the customer (editable) */}
+            {LIVE_STATIONS.map((station, si) => (
+              <tr
+                key={station.slug}
+                className={`border-t border-gold/10 transition-colors hover:bg-pine/20 ${si % 2 === 1 ? "bg-pine/10" : ""}`}
+              >
+                <td className="bg-forest/50 px-5 py-4">
+                  <span className="flex items-center gap-2 text-sm font-semibold text-gold">
+                    <Flame className="h-4 w-4 text-gold/60" />
+                    {station.name}
+                    <span className="rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-gold">
+                      {station.unit}
+                    </span>
+                  </span>
+                </td>
+                <td colSpan={3} className="px-3 py-4 text-center">
+                  <label className="inline-flex flex-wrap items-center justify-center gap-2">
+                    <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.15em] text-cream/50">
+                      RM
+                      <span className="text-cream/35">{t("calculator.perStick")}</span>
+                    </span>
+                    <input
+                      type="number"
+                      step="0.05"
+                      min={0}
+                      value={satePrice[station.slug] || ""}
+                      onChange={(e) => onSatePriceChange(station.slug, e.target.value)}
+                      aria-label={`${station.name} ${t("calculator.perStick")}`}
+                      className="w-24 rounded-lg border border-gold/30 bg-fern py-2 text-center text-sm font-bold text-gold outline-none transition-all hover:border-gold/50 focus:border-gold focus:ring-1 focus:ring-gold/30"
+                    />
+                    <span className="text-[9px] italic text-cream/40">
+                      {t("calculator.sateEditable")}
+                    </span>
+                  </label>
+                </td>
               </tr>
             ))}
 

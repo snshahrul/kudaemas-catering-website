@@ -79,3 +79,26 @@ export const CATALOG: CatalogCategory[] = [
 export const CATEGORY_KEYS = CATALOG.map((c) => c.key);
 
 export type CategoryKey = (typeof CATEGORY_KEYS)[number];
+
+/* ------------------------------------------------------------------ */
+/*  Live stations — tiered per-stick pricing, separate from the        */
+/*  per-pax CATALOG dishes but following the same tier structure so    */
+/*  they plug into the Menu Calculator.                                */
+/* ------------------------------------------------------------------ */
+
+export type LiveStation = {
+  /** slug used for keys/translation */
+  slug: string;
+  /** fallback name — used when the i18n dictionary has no translation */
+  name: string;
+  /** per-stick price in MYR per pax tier (separate from per-pax dish pricing) */
+  price: Record<TierKey, number>;
+  /** how the price is quoted — e.g. "per stick" */
+  unit: string;
+  image?: string;
+};
+
+export const LIVE_STATIONS: LiveStation[] = [
+  { slug: "sate-daging", name: "Sate Daging (Beef)", price: { tier100: 0.8, tier60: 1.3, tier40: 2.0 }, unit: "per stick", image: "/satey%20beef.jfif" },
+  { slug: "sate-ayam", name: "Sate Ayam (Chicken)", price: { tier100: 0.8, tier60: 1.3, tier40: 2.0 }, unit: "per stick", image: "/satey%20ayam.jfif" },
+];

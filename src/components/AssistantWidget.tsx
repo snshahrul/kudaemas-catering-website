@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Loader2, Send, X } from 'lucide-react';
 import { HorseMark } from '@/components/logo';
@@ -47,18 +47,26 @@ export default function AssistantWidget() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Bilingual greeting (re-greet when language changes and no chat yet).
-  const greeting: Msg = {
-    role: 'assistant',
-    content:
-      language === 'ms'
-        ? 'Salam! 🐴 Saya Kuda, concierge digital KudaEmas Katering. Boleh saya bantu dengan menu, harga, atau tempahan acara anda?'
-        : "Hello! 🐴 I'm Kuda, the digital concierge for KudaEmas Katering. May I help with menus, pricing, or booking your event?",
-  };
-  if (messages.length === 0) setMessages([greeting]);
+  const greeting: Msg = useMemo(
+    () => ({
+      role: 'assistant',
+      content:
+        language === 'ms'
+          ? "Hi! 🐴 Saya Nina, pembantu AI anda untuk Katering KudaEmas. Boleh saya bantu dengan menu, harga, atau tempahan acara anda?"
+          : "Hi! 🐴 I'm Nina, your AI assistant for Katering KudaEmas. May I help with menus, pricing, or booking your event?",
+    }),
+    [language],
+  );
+
+  // Derived state: show the current-language greeting until the user chats.
+  const visibleMessages: Msg[] = useMemo(
+    () => (messages.length === 0 ? [greeting] : messages),
+    [messages, greeting],
+  );
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-  }, [messages, loading, open]);
+  }, [visibleMessages, loading, open]);
 
   async function submitBooking(booking: Booking) {
     setBookingStatus('submitting');
@@ -77,7 +85,7 @@ export default function AssistantWidget() {
           }).join(' · ')
         : null;
       const parts = [
-        'Booked via Kuda AI assistant chat.',
+        'Booked via Nina AI assistant chat.',
         menuSummary ? `Calculator selection: ${menuSummary} (${confirmed!.pax} pax ≈ MYR ${confirmed!.grandTotal.toLocaleString('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}).` : null,
         booking.notes ? `Notes: ${booking.notes}` : null,
       ].filter(Boolean);
@@ -120,8 +128,8 @@ export default function AssistantWidget() {
           role: 'assistant',
           content:
             language === 'ms'
-              ? '⚠️ Maaf, saya tidak dapat menghantar tempahan itu. Sila cuba lagi atau WhatsApp kami di +6011-3979 4166.'
-              : "⚠️ Sorry, I couldn't submit the booking. Please try again, or WhatsApp us at +6011-3979 4166.",
+              ? '⚠️ Maaf, saya tidak dapat menghantar tempahan itu. Sila cuba lagi atau WhatsApp kami di +6018-355 1765.'
+              : "⚠️ Sorry, I couldn't submit the booking. Please try again, or WhatsApp us at +6018-355 1765.",
         },
       ]);
     }
@@ -130,7 +138,7 @@ export default function AssistantWidget() {
   async function send() {
     const text = input.trim();
     if (!text || loading) return;
-    const next: Msg[] = [...messages, { role: 'user', content: text }];
+    const next: Msg[] = [...visibleMessages, { role: 'user', content: text }];
     setMessages(next);
     setInput('');
     setLoading(true);
@@ -193,7 +201,7 @@ export default function AssistantWidget() {
           ? 'Dalam talian'
           : 'Online',
     placeholder: language === 'ms' ? 'Taip mesej anda…' : 'Type your message…',
-    title: 'Kuda · KudaEmas',
+    title: 'Nina · KudaEmas',
     close: language === 'ms' ? 'Tutup' : 'Close',
   };
 
@@ -203,13 +211,13 @@ export default function AssistantWidget() {
       <button
         aria-label={open ? ui.close : 'Open assistant'}
         onClick={() => setOpen((o) => !o)}
-        className="group fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full border border-gold/50 bg-fern text-gold shadow-[0_8px_30px_rgba(0,0,0,0.55)] transition-all duration-300 hover:border-gold hover:bg-pine hover:shadow-[0_0_36px_rgba(201,162,75,0.35)]"
+        className="group fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center overflow-hidden rounded-full border border-gold/50 bg-fern text-gold shadow-[0_8px_30px_rgba(0,0,0,0.55)] transition-all duration-300 hover:border-gold hover:bg-pine hover:shadow-[0_0_36px_rgba(201,162,75,0.35)]"
       >
         <span className="absolute inset-0 rounded-full bg-gold/10 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100" />
         {open ? (
           <X className="relative h-5 w-5" />
         ) : (
-          <HorseMark className="relative h-7 w-7" />
+          <HorseMark className="relative h-14 w-14" />
         )}
         {!open && (
           <span className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full border-2 border-forest bg-gold" />
@@ -229,8 +237,8 @@ export default function AssistantWidget() {
             {/* Header */}
             <div className="relative flex items-center gap-3 border-b border-gold/20 bg-pine/80 px-4 py-3.5">
               <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-gold/40 bg-gold/10 text-gold">
-                <HorseMark className="h-6 w-6" />
+              <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full border border-gold/40 bg-gold/10">
+                <HorseMark className="h-10 w-10" />
               </span>
               <div className="flex-1">
                 <div className="font-display text-sm font-semibold tracking-tight text-cream">{ui.title}</div>
@@ -250,7 +258,7 @@ export default function AssistantWidget() {
 
             {/* Messages */}
             <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-fern p-4">
-              {messages.map((m, i) => (
+              {visibleMessages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
                     className={[

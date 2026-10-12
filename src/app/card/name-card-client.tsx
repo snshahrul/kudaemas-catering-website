@@ -92,25 +92,25 @@ export function NameCardClient() {
             transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 15 }}
             className="relative -mt-16 mx-auto"
           >
-            <div className="mx-auto grid h-32 w-32 place-items-center rounded-full border-2 border-gold/30 bg-gradient-to-b from-gold/15 to-gold/5 shadow-[0_0_60px_rgba(201,162,75,0.25)] backdrop-blur-sm">
-              <HorseMark className="h-16 w-16 text-gold" />
+            <div className="mx-auto grid h-32 w-32 place-items-center overflow-hidden rounded-full border-2 border-gold/30 bg-gradient-to-b from-gold/15 to-gold/5 shadow-[0_0_60px_rgba(201,162,75,0.25)] backdrop-blur-sm">
+              <HorseMark className="h-32 w-32" />
             </div>
           </motion.div>
 
           <div className="relative px-8 pb-8 pt-6 text-center sm:px-10">
             <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible">
               <h1 className="font-display text-4xl font-semibold tracking-tight text-cream">
-                Kuda<span className="gold-shimmer">Emas</span>
+                <span className="gold-shimmer">Katering</span> Kuda<span className="gold-shimmer">Emas</span>
               </h1>
               <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.5em] text-gold/70">
-                Katering
+                Malaysia
               </p>
             </motion.div>
 
             <motion.div custom={1} variants={fadeUp} initial="hidden" animate="visible">
               <div className="mx-auto mt-6 flex items-center gap-3">
                 <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/30" />
-                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gold/50">Est. 2025</span>
+                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gold/50">Est. 2025 · Reg. No. 003899142-V</span>
                 <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold/30" />
               </div>
             </motion.div>
@@ -157,21 +157,22 @@ export function NameCardClient() {
               animate="visible"
               className="mt-7 space-y-3"
             >
-              <a
-                href="https://wa.me/601139794166"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-center gap-3 rounded-xl border border-transparent py-2.5 text-sm text-cream/65 transition-all duration-300 hover:border-gold/15 hover:bg-gold/5 hover:text-gold"
+              <div
+                className="group flex items-center justify-center gap-3 rounded-xl border border-transparent py-2.5 text-sm text-cream/65 transition-all duration-300"
               >
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/70 transition-colors group-hover:bg-gold/15 group-hover:text-gold">
                   <PhoneIcon className="h-5 w-5" />
                 </span>
                 <span className="text-left leading-tight">
-                  +6018-355 1765 - Azman (Our Chef)
+                  <a href="tel:+60183551765" className="transition-colors hover:text-gold">+6018-355 1765 - Azman (Our Chef)</a>
                   <br />
-                  +6011-3979 4166 - Azmi
+                  <a href="tel:+601139794166" className="transition-colors hover:text-gold">+6011-3979 4166 - Azmi</a>
+                  <span className="mt-1.5 block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/60">North Region</span>
+                  <a href="tel:+60136378000" className="transition-colors hover:text-gold">+6013-637 8000 - Abg Man</a>
+                  <br />
+                  <a href="tel:+601163935224" className="transition-colors hover:text-gold">+6011-6393 5224 - Akram</a>
                 </span>
-              </a>
+              </div>
 
               <a
                 href="mailto:kudaemas.app@gmail.com"
@@ -188,6 +189,13 @@ export function NameCardClient() {
                   <LocationIcon className="h-5 w-5" />
                 </span>
                 <span className="text-left text-[13px] leading-relaxed">
+                  <span className="block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">North — Perak</span>
+                  No. 444 Jalan Tropika 4,
+                  <br />
+                  Residensi Lagenda Tropika,
+                  <br />
+                  35350 Temoh, Perak
+                  <span className="mt-2 block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">Central — Selangor</span>
                   Unit 10-15-37 Tingkat 15, Block 10
                   <br />
                   Desa Mentari Apartment
@@ -205,7 +213,7 @@ export function NameCardClient() {
               className="mt-7 flex items-center justify-center gap-4"
             >
               <a
-                href="https://wa.me/601139794166"
+                href="https://wa.me/60183551765"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"

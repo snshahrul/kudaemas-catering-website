@@ -5,6 +5,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { CalculatorProvider } from "@/components/calculator-context";
 import AssistantWidget from "@/components/AssistantWidget";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -19,7 +20,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "KudaEmas Katering — The Golden Standard of Malaysian Katering",
+  title: "Katering KudaEmas (003899142-V) — The Golden Standard of Malaysian Katering",
   description:
     "Award-winning Malaysian katering for weddings, corporate summits and private celebrations. Signature grand feasts, live stations and grand buffets across Malaysia since 2025.",
   keywords: [
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <LanguageProvider>
           <CalculatorProvider>
             {children}
+            <WhatsAppButton />
             <AssistantWidget />
           </CalculatorProvider>
         </LanguageProvider>

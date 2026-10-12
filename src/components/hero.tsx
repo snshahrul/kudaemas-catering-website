@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, ArrowUpRight, BadgeCheck, Star } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -38,8 +38,12 @@ export function Hero() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={HERO_IMAGE}
-          alt="Grand Malaysian heritage feast spread"
+          alt="Grand Malaysian heritage feast by Katering KudaEmas — wedding catering in Petaling Jaya and Kuala Lumpur"
           className="h-full w-full object-cover"
+          loading="eager"
+          fetchPriority="high"
+          width={1920}
+          height={1080}
         />
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-b from-forest/85 via-forest/45 to-forest" />
@@ -54,28 +58,6 @@ export function Hero() {
       >
         {/* Trust badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-wrap items-center gap-3"
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-forest/70 py-2 pl-3 pr-4 backdrop-blur-md">
-            <span className="flex gap-0.5">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-3 w-3 fill-gold text-gold" />
-              ))}
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-cream/85">
-              {t("hero.reviews")}
-            </span>
-          </span>
-          <span className="hidden items-center gap-2 rounded-full border border-cream/15 bg-forest/50 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-cream/70 backdrop-blur-md sm:inline-flex">
-            <BadgeCheck className="h-3.5 w-3.5 text-gold" />
-            {t("hero.trusted")}
-          </span>
-        </motion.div>
-
-        <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -87,41 +69,56 @@ export function Hero() {
           </p>
         </motion.div>
 
-        <h1 className="mt-6 font-display text-[13vw] font-medium leading-[0.95] tracking-tight text-cream sm:text-[11vw] lg:text-[7.5rem]">
-          <span className="block overflow-hidden">
-            <motion.span
-              className="block"
-              initial={{ y: "108%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1.1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="flow-light block">{t("hero.title1")}</span>
-            </motion.span>
+        <h1 className="mt-6 font-display text-[11.5vw] font-medium leading-[0.95] tracking-tight text-cream sm:text-[9.5vw] lg:text-[6.5rem]">
+          {/* SEO-readable text for crawlers and screen readers */}
+          <span className="sr-only">
+            Katering KudaEmas — Malaysian Wedding &amp; Event Catering in Petaling Jaya, Kuala Lumpur &amp; Selangor
           </span>
-          <span className="block overflow-hidden">
-            <motion.span
-              className="block"
-              initial={{ y: "108%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1.1, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="flow-light flow-light-gold flow-delay-1 block italic">
-                {t("hero.title2")}
-              </span>
-            </motion.span>
-          </span>
-          <span className="block overflow-hidden">
-            <motion.span
-              className="block"
-              initial={{ y: "108%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1.1, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="flow-light flow-delay-2 block">{t("hero.title3")}</span>
-            </motion.span>
+
+          {/* Visual H1 — decorative, hidden from screen readers */}
+          <span aria-hidden="true">
+            <span className="block overflow-hidden">
+              <motion.span
+                className="block"
+                initial={{ y: "108%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span className="flow-light block">{t("hero.title1")}</span>
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden">
+              <motion.span
+                className="block"
+                initial={{ y: "108%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.1, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span className="flow-light flow-light-gold flow-delay-1 block italic">
+                  {t("hero.title2")}
+                </span>
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden">
+              <motion.span
+                className="block"
+                initial={{ y: "108%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.1, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span className="flow-light flow-delay-2 block">{t("hero.title3")}</span>
+              </motion.span>
+            </span>
           </span>
         </h1>
-
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-3 text-xs font-bold uppercase tracking-[0.35em] text-gold/90 sm:text-sm"
+        >
+          Petaling Jaya · Kuala Lumpur · Selangor
+        </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -130,7 +127,7 @@ export function Hero() {
         >
           {t("hero.description")}
         </motion.p>
-
+        
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

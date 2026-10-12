@@ -1,6 +1,6 @@
 "use client";
 
-import { Flame } from "lucide-react";
+import { FileText, Flame } from "lucide-react";
 import { Reveal, RevealText } from "./reveal";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -127,6 +127,16 @@ export function About() {
               <br />
               {t("about.team")}
             </p>
+          </Reveal>
+          <Reveal delay={0.8}>
+            <a
+              href="/SOP.md"
+              download="KudaEmas-Katering-SOP.md"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl border border-gold/40 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-forest"
+            >
+              <FileText className="h-4 w-4" />
+              {t("about.sopDownload")}
+            </a>
           </Reveal>
         </div>
       </div>

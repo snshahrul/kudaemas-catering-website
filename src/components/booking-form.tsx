@@ -155,6 +155,9 @@ export function BookingForm() {
                   </span>
                   <span className="text-sm font-semibold text-cream transition-colors group-hover:text-gold">
                     +6011-3979 4166 / +6018-355 1765
+                    <span className="block text-xs font-semibold">
+                      North: +6013-637 8000 (Abg Man) · +6011-6393 5224 (Akram)
+                    </span>
                   </span>
                 </span>
               </a>
@@ -180,13 +183,10 @@ export function BookingForm() {
                     {t("booking.form.kitchen")}
                   </span>
                   <span className="text-sm font-semibold text-cream">
-                    10-15-37, Tingkat 15,
-                    <br />
-                    Desa Mentari Apartment Block 10
-                    <br />
-                    46060 Petaling Jaya,
-                    <br />
-                    Selangor
+                    North — No. 444 Jalan Tropika 4, Residensi Lagenda Tropika, 35350 Temoh, Perak
+                    <span className="mt-1 block text-xs font-medium text-cream/70">
+                      Central — 10-15-37, Tingkat 15, Desa Mentari Apartment Block 10, 46060 Petaling Jaya, Selangor
+                    </span>
                   </span>
                 </span>
               </div>

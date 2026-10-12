@@ -42,15 +42,15 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3">
-              <span className="grid h-12 w-12 place-items-center rounded-full border border-gold/50 bg-gold/10 text-gold">
-                <HorseMark className="h-7 w-7" />
+              <span className="grid h-12 w-12 place-items-center overflow-hidden rounded-full border border-gold/50 bg-gold/10">
+                <HorseMark className="h-12 w-12" />
               </span>
               <div className="leading-none">
                 <p className="font-display text-2xl font-semibold tracking-tight text-cream">
-                  Kuda<span className="gold-shimmer">Emas</span>
+                  <span className="gold-shimmer">Katering</span> Kuda<span className="gold-shimmer">Emas</span>
                 </p>
                 <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.42em] text-gold/80">
-                  Katering · Est. 2025
+                  Est. 2025 · Reg. No. 003899142-V
                 </p>
               </div>
             </div>
@@ -58,21 +58,24 @@ export function Footer() {
               {t("footer.brandDesc") || "The golden standard of Malaysian katering — heritage wedding feasts, live fire stations and grand buffets for celebrations across Malaysia."}
             </p>
             <div className="mt-7 flex gap-3">
-              {[
-                { icon: InstagramIcon, label: "Instagram" },
-                { icon: FacebookIcon, label: "Facebook" },
-                { icon: YoutubeIcon, label: "YouTube" },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href="#top"
-                  aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-cream/15 text-cream/60 transition-all duration-300 hover:border-gold hover:bg-gold hover:text-forest"
-                >
-                  <s.icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
+            {[
+              { icon: InstagramIcon, label: "Instagram", href: "https://instagram.com/kudaemas" },
+              { icon: FacebookIcon, label: "Facebook", href: "https://facebook.com/kudaemas" },
+              { icon: YoutubeIcon, label: "YouTube", href: "https://youtube.com/@kudaemas" },
+            ].map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Katering KudaEmas on ${s.label}`}
+                className="grid h-10 w-10 place-items-center rounded-full border border-cream/15 text-cream/60 transition-all duration-300 hover:border-gold hover:bg-gold hover:text-forest"
+              >
+                <s.icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
+
           </div>
 
           {/* Explore */}
@@ -115,6 +118,28 @@ export function Footer() {
             </p>
             <address className="mt-5 space-y-3 text-sm not-italic leading-relaxed text-cream/60">
               <p>
+                <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-gold/70">
+                  North Region — Perak
+                </span>
+                No. 444 Jalan Tropika 4,
+                <br />
+                Residensi Lagenda Tropika,
+                <br />
+                35350 Temoh, Perak
+              </p>
+              <p>
+                <a href="tel:+60136378000" className="transition-colors hover:text-gold">
+                  +6013-637 8000 — Abg Man (North)
+                </a>
+                <br />
+                <a href="tel:+601163935224" className="transition-colors hover:text-gold">
+                  +6011-6393 5224 — Akram (North)
+                </a>
+              </p>
+              <p>
+                <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-gold/70">
+                  Central Region — Selangor
+                </span>
                 10-15-37, Tingkat 15
                 <br />
                 Desa Mentari Apartment Block 10
@@ -125,11 +150,20 @@ export function Footer() {
               </p>
               <p>
                 <a href="tel:+601139794166" className="transition-colors hover:text-gold">
-                   +6011-3979 4166 / +6018-355 1765
+                  +6011-3979 4166 / +6018-355 1765
                 </a>
                 <br />
                 <a href="mailto:kudaemas.app@gmail.com" className="transition-colors hover:text-gold">
-                   kudaemas.app@gmail.com
+                  kudaemas.app@gmail.com
+                </a>
+                <br />
+                <a
+                  href="https://wa.me/60183551765?text=Hi%20KudaEmas%2C%20I%27d%20like%20to%20enquire"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-gold transition-colors hover:text-gold-bright"
+                >
+                  WhatsApp: +6018-355 1765
                 </a>
               </p>
               <p className="text-cream/45">

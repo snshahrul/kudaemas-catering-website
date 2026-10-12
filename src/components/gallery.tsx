@@ -46,6 +46,12 @@ const IMAGES = [
     span: "",
     aspect: "aspect-[4/3]",
   },
+  {
+    src: "/C.jfif",
+    alt: "KudaEmas signature dish presentation",
+    span: "",
+    aspect: "aspect-[4/3]",
+  },
 ];
 
 export function Gallery() {

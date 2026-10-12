@@ -6,6 +6,8 @@ import { useLanguage } from "@/i18n/LanguageContext";
 
 const SERVICE_ICONS = [Heart, Briefcase, Gem, Flame];
 
+const SERVICE_SLUGS = ["weddings", "corporate", "private", "live-stations"];
+
 export function Services() {
   const { t } = useLanguage();
   const items = t("services.items");
