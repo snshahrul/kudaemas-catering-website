@@ -79,7 +79,7 @@
       },
       {
         slug: "live-stations",
-        title: "Live Stations & Crew",
+        title: "Special Request & Menu Design by Client",
         description: "Sate grill, wok-fire nasi goreng, gudeg cauldrons and kue towers — staffed stations that turn dinner into performance art.",
         tag: "Interactive theater",
       },
@@ -248,7 +248,7 @@
       "Weddings & Receptions",
       "Corporate & Summits",
       "Private Celebrations",
-      "Live Stations & Crew",
+      "Special Request & Menu Design by Client",
     ]
   },
   calculator: {

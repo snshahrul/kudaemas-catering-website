@@ -81,7 +81,7 @@
         slug: "private",
       },
       {
-        title: "Stesen Terbuka & Kru",
+        title: "Permintaan Khas & Reka Bentuk Menu oleh Pelanggan",
         description: "Panggangan sate, nasi goreng kuali berapi, kawah gudeg dan menara kuih — stesen berpekerja yang menjadikan makan malam sebagai seni persembahan.",
         tag: "Teater interaktif",
         slug: "live-stations",
@@ -251,7 +251,7 @@
       "Perkahwinan & Resepsi",
       "Korporat & Sidang",
       "Sambutan Peribadi",
-      "Stesen Terbuka & Kru",
+      "Permintaan Khas & Reka Bentuk Menu oleh Pelanggan",
     ]
   },
   calculator: {
