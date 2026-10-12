@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { LogOut, Phone, ChevronDown, Loader2 } from "lucide-react";
+import { LogOut, Phone, ChevronDown, Loader2, Download } from "lucide-react";
 
 export const STATUS_VALUES = ["new", "contacted", "quoted", "won", "lost"] as const;
 type Status = (typeof STATUS_VALUES)[number];
@@ -210,6 +210,20 @@ function BookingRowCard({
         )}
       </div>
     </details>
+  );
+}
+
+/** Export CSV button (client): plain link, the endpoint enforces the session. */
+export function ExportCsvButton() {
+  return (
+    <a
+      href="/api/bookings/export"
+      download
+      className="flex items-center gap-2 rounded-full border border-gold/40 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gold transition-colors hover:bg-gold hover:text-forest"
+    >
+      <Download className="h-3.5 w-3.5" />
+      Export CSV
+    </a>
   );
 }
 

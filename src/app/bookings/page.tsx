@@ -5,7 +5,7 @@ import { db } from "@/db";
 import { bookings } from "@/db/schema";
 import { SESSION_COOKIE, checkSessionToken } from "@/lib/bookings-auth";
 import { LoginGate } from "./login-gate";
-import { BookingsTable, SignOutButton } from "./bookings-table";
+import { BookingsTable, SignOutButton, ExportCsvButton } from "./bookings-table";
 
 export const metadata: Metadata = {
   title: "Bookings Dashboard | Katering KudaEmas",
@@ -58,7 +58,10 @@ export default async function BookingsPage() {
             {rows.length} submission{rows.length === 1 ? "" : "s"} · newest first
           </p>
         </div>
-        <SignOutButton />
+        <div className="flex items-center gap-2">
+          <ExportCsvButton />
+          <SignOutButton />
+        </div>
       </header>
 
       <BookingsTable rows={rows} />
