@@ -93,7 +93,7 @@
     captions: [
       "Traditional Feast . Malaysia",
       "Elegant Setup . Malaysia",
-      "Live Station . Malaysia",
+      "Special Menu Design . Malaysia",
       "Wedding Buffet . Malaysia",
       "Traditional Cuisine . Malaysia",
       "Grand Buffet . Malaysia",
@@ -242,7 +242,6 @@
     officeHours: "Office hours · Mon”Sat, 08.00”20.00 WIB",
     rights: "© {year} Katering KudaEmas (Reg. No. 003899142-V). All rights reserved.",
     digitalCard: "Digital Business Card",
-    crafted: "Crafted with fire in Malaysia",
     backToTop: "Back to top",
     servicesList: [
       "Weddings & Receptions",

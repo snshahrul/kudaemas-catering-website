@@ -154,7 +154,7 @@ export function NameCardClient() {
               animate="visible"
               className="mt-6 flex flex-wrap justify-center gap-2"
             >
-              {["Weddings Food Arrangements", "Corporate Events", "Live Stations", "Buffets"].map((service) => (
+              {["Weddings Food Arrangements", "Corporate Events", "Special Requests", "Buffets"].map((service) => (
                 <span
                   key={service}
                   className="rounded-full border border-gold/20 bg-gold/5 px-3 py-1 text-[9px] font-bold uppercase tracking-[0.15em] text-gold/70"
@@ -356,9 +356,6 @@ export function NameCardClient() {
               className="mt-8"
             >
               <div className="h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
-              <p className="mt-4 font-display text-[11px] italic text-gold/40">
-                Crafted with fire in Malaysia
-              </p>
             </motion.div>
           </div>
         </div>

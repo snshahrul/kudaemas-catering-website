@@ -173,19 +173,15 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-cream/10 pt-8 sm:flex-row">
+        <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-cream/10 pt-8 sm:flex-row sm:flex-wrap">
           <p className="text-xs text-cream/40">
             {t("footer.rights").replace("{year}", new Date().getFullYear().toString())}
           </p>
           <a
             href="/card"
-            className="font-display text-sm italic text-gold/70 transition-colors hover:text-gold"
-          >
+            className="font-display text-sm italic text-gold/70 transition-colors hover:text-gold">
             {t("footer.digitalCard")}
           </a>
-          <p className="font-display text-sm italic text-gold/70">
-            {t("footer.crafted")}
-          </p>
           <a
             href="#top"
             className="group flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em] text-cream/50 transition-colors hover:text-gold"

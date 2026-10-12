@@ -96,7 +96,7 @@
     captions: [
       "Jamuan Tradisional · Malaysia",
       "Susunan Elegan · Malaysia",
-      "Stesen Terbuka · Malaysia",
+      "Reka Bentuk Menu Khas · Malaysia",
       "Bufet Perkahwinan · Malaysia",
       "Masakan Tradisional · Malaysia",
       "Bufet Agung · Malaysia",
@@ -245,7 +245,6 @@
     officeHours: "Waktu Pejabat · Isnin”Sabtu, 08.00”20.00 WIB",
     rights: "© {year} Katering KudaEmas (No. Pendaftaran 003899142-V). Hak cipta terpelihara.",
     digitalCard: "Kad Perniagaan Digital",
-    crafted: "Dicipta dengan api di Malaysia",
     backToTop: "Kembali ke atas",
     servicesList: [
       "Perkahwinan & Resepsi",

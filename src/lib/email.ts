@@ -213,7 +213,7 @@ ${rows
       </div>
       <div style="padding:12px 20px;background:#0f2419;">
         <p style="margin:0;font-size:10px;color:#94a88f;text-align:center;letter-spacing:1px;">
-          Crafted with fire in Malaysia · ${bookingRef}
+          Katering KudaEmas (003899142-V) · ${bookingRef}
         </p>
       </div>
     </div>
