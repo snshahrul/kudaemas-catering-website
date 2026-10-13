@@ -95,14 +95,15 @@ export function NameCardClient() {
         ))}
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-        className="relative w-full max-w-sm"
-      >
+      <div className="relative flex w-full flex-col items-center gap-5">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          className="relative w-full max-w-xs"
+        >
         <div className="relative overflow-hidden rounded-[2rem] border border-gold/20 bg-gradient-to-b from-fern/90 via-moss/80 to-forest/95 shadow-[0_0_100px_-25px_rgba(201,162,75,0.2)] backdrop-blur-xl">
-          <div className="relative h-32 overflow-hidden">
+          <div className="relative h-28 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-gold/10 via-gold/5 to-transparent" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gold/15 via-transparent to-transparent" />
             <div className="absolute left-1/2 top-8 h-px w-48 -translate-x-1/2 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
@@ -112,16 +113,16 @@ export function NameCardClient() {
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 15 }}
-            className="relative -mt-16 mx-auto"
+            className="relative -mt-14 mx-auto"
           >
-            <div className="mx-auto grid h-32 w-32 place-items-center overflow-hidden rounded-full border-2 border-gold/30 bg-gradient-to-b from-gold/15 to-gold/5 shadow-[0_0_60px_rgba(201,162,75,0.25)] backdrop-blur-sm">
-              <HorseMark className="h-32 w-32" />
+            <div className="mx-auto grid h-28 w-28 place-items-center overflow-hidden rounded-full border-2 border-gold/30 bg-gradient-to-b from-gold/15 to-gold/5 shadow-[0_0_60px_rgba(201,162,75,0.25)] backdrop-blur-sm">
+              <HorseMark className="h-28 w-28" />
             </div>
           </motion.div>
 
-          <div className="relative px-8 pb-8 pt-6 text-center sm:px-10">
+          <div className="relative px-6 pb-7 pt-5 text-center sm:px-8">
             <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible">
-              <h1 className="font-display text-4xl font-semibold tracking-tight text-cream">
+              <h1 className="font-display text-3xl font-semibold tracking-tight text-cream">
                 <span className="gold-shimmer">Katering</span> Kuda<span className="gold-shimmer">Emas</span>
               </h1>
               <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.5em] text-gold/70">
@@ -239,7 +240,7 @@ export function NameCardClient() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-                className="group grid h-11 w-11 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/60 transition-all duration-300 hover:border-[#25D366] hover:bg-[#25D366]/10 hover:text-[#25D366] hover:shadow-[0_0_20px_rgba(37,211,102,0.3)]"
+                className="group grid h-10 w-10 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/60 transition-all duration-300 hover:border-[#25D366] hover:bg-[#25D366]/10 hover:text-[#25D366] hover:shadow-[0_0_20px_rgba(37,211,102,0.3)]"
               >
                 <WhatsAppIcon className="h-5 w-5" />
               </a>
@@ -248,7 +249,7 @@ export function NameCardClient() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="group grid h-11 w-11 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/60 transition-all duration-300 hover:border-[#E4405F] hover:bg-[#E4405F]/10 hover:text-[#E4405F] hover:shadow-[0_0_20px_rgba(228,64,95,0.3)]"
+                className="group grid h-10 w-10 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/60 transition-all duration-300 hover:border-[#E4405F] hover:bg-[#E4405F]/10 hover:text-[#E4405F] hover:shadow-[0_0_20px_rgba(228,64,95,0.3)]"
               >
                 <InstagramIcon className="h-5 w-5" />
               </a>
@@ -257,27 +258,32 @@ export function NameCardClient() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="group grid h-11 w-11 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/60 transition-all duration-300 hover:border-[#1877F2] hover:bg-[#1877F2]/10 hover:text-[#1877F2] hover:shadow-[0_0_20px_rgba(24,119,242,0.3)]"
+                className="group grid h-10 w-10 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/60 transition-all duration-300 hover:border-[#1877F2] hover:bg-[#1877F2]/10 hover:text-[#1877F2] hover:shadow-[0_0_20px_rgba(24,119,242,0.3)]"
               >
                 <FacebookIcon className="h-5 w-5" />
               </a>
               <a
                 href="mailto:kudaemas.app@gmail.com"
                 aria-label="Email"
-                className="group grid h-11 w-11 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/60 transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold hover:shadow-[0_0_20px_rgba(201,162,75,0.3)]"
+                className="group grid h-10 w-10 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/60 transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:text-gold hover:shadow-[0_0_20px_rgba(201,162,75,0.3)]"
               >
                 <EmailIcon className="h-5 w-5" />
               </a>
             </motion.div>
 
-            <motion.div
-              custom={7}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              className="mt-8"
-            >
-              <div className="rounded-2xl border border-gold/20 bg-gold/5 p-5">
+          </div>
+        </div>
+
+        <div className="absolute -bottom-4 left-1/2 h-8 w-[85%] -translate-x-1/2 rounded-full bg-gold/[0.05] blur-xl" />
+      </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          className="relative w-full max-w-[240px]"
+        >
+          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-4 shadow-[0_0_60px_-20px_rgba(201,162,75,0.25)] backdrop-blur-xl">
                 <p className="text-center text-[9px] font-bold uppercase tracking-[0.35em] text-gold/70">
                   {qrOpen ? "Scan to save contact" : "Tap to show QR"}
                 </p>
@@ -346,22 +352,8 @@ export function NameCardClient() {
                   Save Contact
                 </a>
               </div>
-            </motion.div>
-
-            <motion.div
-              custom={8}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              className="mt-8"
-            >
-              <div className="h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
-            </motion.div>
-          </div>
-        </div>
-
-        <div className="absolute -bottom-4 left-1/2 h-8 w-[85%] -translate-x-1/2 rounded-full bg-gold/[0.05] blur-xl" />
-      </motion.div>
+        </motion.div>
+      </div>
     </main>
   );
 }
