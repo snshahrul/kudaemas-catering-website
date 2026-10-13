@@ -212,18 +212,14 @@ export function NameCardClient() {
                   <LocationIcon className="h-5 w-5" />
                 </span>
                 <span className="text-left text-[13px] leading-relaxed">
-                  <span className="block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">North — Perak</span>
-                  No. 444 Jalan Tropika 4,
-                  <br />
+                  <span className="block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">North Region</span>
                   Residensi Lagenda Tropika,
                   <br />
-                  35350 Temoh, Perak
-                  <span className="mt-2 block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">Central — Selangor</span>
-                  Unit 10-15-37 Tingkat 15, Block 10
+                  Temoh, Perak
+                  <span className="mt-2 block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">Center Region</span>
+                  Desa Mentari Apartment,
                   <br />
-                  Desa Mentari Apartment
-                  <br />
-                  46060 Petaling Jaya, Selangor
+                  Petaling Jaya
                 </span>
               </div>
             </motion.div>
