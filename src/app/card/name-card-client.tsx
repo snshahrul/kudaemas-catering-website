@@ -178,8 +178,8 @@ export function NameCardClient() {
                   <span className="min-w-0 flex-1 text-left text-sm leading-relaxed text-cream/70">
                     {[
                       { name: "Azman · Chef", number: "+6018-355 1765", tel: "+60183551765" },
-                      { name: "Azmi", number: "+6011-3979 4166", tel: "+601139794166", label: "NORTH REGION" },
-                      { name: "Abg Man", number: "+6013-637 8000", tel: "+60136378000" },
+                      { name: "Azmi", number: "+6011-3979 4166", tel: "+601139794166", label: "CENTER REGION" },
+                      { name: "Abg Man", number: "+6013-637 8000", tel: "+60136378000", label: "NORTH REGION" },
                       { name: "Akram", number: "+6011-6393 5224", tel: "+601163935224" },
                     ].map((c) => (
                       <span key={c.tel} className="block">

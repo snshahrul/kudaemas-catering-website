@@ -23,7 +23,7 @@ const vcard = [
   "item1.TEL;TYPE=CELL:+6018-3551765",
   "item1.X-ABLabel:Our Chef - Azman",
   "item2.TEL;TYPE=CELL:+6011-39794166",
-  "item2.X-ABLabel:Azmi",
+  "item2.X-ABLabel:Center - Azmi",
   "item3.TEL;TYPE=CELL:+6013-6378000",
   "item3.X-ABLabel:North - Abg Man",
   "item4.TEL;TYPE=CELL:+6011-63935224",
