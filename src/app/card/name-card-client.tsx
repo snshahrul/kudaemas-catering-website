@@ -180,21 +180,30 @@ export function NameCardClient() {
               animate="visible"
               className="mt-7 space-y-3"
             >
-              <div
-                className="group flex items-center justify-center gap-3 rounded-xl border border-transparent py-2.5 text-sm text-cream/65 transition-all duration-300"
-              >
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/70 transition-colors group-hover:bg-gold/15 group-hover:text-gold">
-                  <PhoneIcon className="h-5 w-5" />
-                </span>
-                <span className="text-left leading-tight">
-                  <a href="tel:+60183551765" className="transition-colors hover:text-gold">+6018-355 1765 - Azman (Our Chef)</a>
-                  <br />
-                  <a href="tel:+601139794166" className="transition-colors hover:text-gold">+6011-3979 4166 - Azmi</a>
-                  <span className="mt-1.5 block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/60">North Region</span>
-                  <a href="tel:+60136378000" className="transition-colors hover:text-gold">+6013-637 8000 - Abg Man</a>
-                  <br />
-                  <a href="tel:+601163935224" className="transition-colors hover:text-gold">+6011-6393 5224 - Akram</a>
-                </span>
+              <div className="rounded-xl border border-gold/15 bg-gold/5 p-4">
+                <div className="flex items-start gap-3">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-gold/20 bg-gold/10 text-gold/70">
+                    <PhoneIcon className="h-5 w-5" />
+                  </span>
+                  <span className="min-w-0 flex-1 text-left text-sm leading-relaxed text-cream/70">
+                    {[
+                      { name: "Azman · Chef", number: "+6018-355 1765", tel: "+60183551765" },
+                      { name: "Azmi", number: "+6011-3979 4166", tel: "+601139794166", label: "NORTH REGION" },
+                      { name: "Abg Man", number: "+6013-637 8000", tel: "+60136378000" },
+                      { name: "Akram", number: "+6011-6393 5224", tel: "+601163935224" },
+                    ].map((c) => (
+                      <span key={c.tel} className="block">
+                        {"label" in c && c.label ? (
+                          <span className="mt-1 block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/60">{c.label}</span>
+                        ) : null}
+                        <span className="flex items-baseline justify-between gap-2">
+                          <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.15em] text-gold/60">{c.name}</span>
+                          <a href={`tel:${c.tel}`} className="transition-colors hover:text-gold">{c.number}</a>
+                        </span>
+                      </span>
+                    ))}
+                  </span>
+                </div>
               </div>
 
               <a
