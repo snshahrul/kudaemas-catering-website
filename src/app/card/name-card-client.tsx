@@ -100,7 +100,7 @@ export function NameCardClient() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-          className="relative w-full max-w-xs"
+          className="relative w-full max-w-md"
         >
         <div className="relative overflow-hidden rounded-[2rem] border border-gold/20 bg-gradient-to-b from-fern/90 via-moss/80 to-forest/95 shadow-[0_0_100px_-25px_rgba(201,162,75,0.2)] backdrop-blur-xl">
           <div className="relative h-28 overflow-hidden">
@@ -131,29 +131,19 @@ export function NameCardClient() {
             </motion.div>
 
             <motion.div custom={1} variants={fadeUp} initial="hidden" animate="visible">
-              <div className="mx-auto mt-6 flex items-center gap-3">
+              <div className="mx-auto mt-4 flex items-center gap-3">
                 <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/30" />
                 <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gold/50">Est. 2025 · Reg. No. 003899142-V</span>
                 <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold/30" />
               </div>
             </motion.div>
 
-            <motion.p
-              custom={2}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              className="mx-auto mt-6 max-w-[280px] text-[13px] leading-relaxed text-cream/55"
-            >
-              Our team is dedicated to delivering exceptional culinary experiences that leave a lasting impression on your guests.
-            </motion.p>
-
             <motion.div
               custom={3}
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="mt-6 flex flex-wrap justify-center gap-2"
+              className="mt-4 flex flex-wrap justify-center gap-2"
             >
               {["Weddings Food Arrangements", "Corporate Events", "Special Requests", "Buffets"].map((service) => (
                 <span
@@ -170,7 +160,7 @@ export function NameCardClient() {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="mx-auto mt-7 h-px w-full bg-gradient-to-r from-transparent via-gold/25 to-transparent"
+              className="mx-auto mt-5 h-px w-full bg-gradient-to-r from-transparent via-gold/25 to-transparent"
             />
 
             <motion.div
@@ -178,7 +168,7 @@ export function NameCardClient() {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="mt-7 space-y-3"
+              className="mt-5 space-y-3"
             >
               <div className="rounded-xl border border-gold/15 bg-gold/5 p-4">
                 <div className="flex items-start gap-3">
@@ -216,16 +206,15 @@ export function NameCardClient() {
                 kudaemas.app@gmail.com
               </a>
 
-              <div className="flex items-center justify-center gap-3 rounded-xl py-2.5 text-sm text-cream/65">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-gold/20 bg-gold/5 text-gold/70">
-                  <LocationIcon className="h-5 w-5" />
-                </span>
-                <span className="text-left text-[13px] leading-relaxed">
+              <div className="grid grid-cols-2 gap-3 rounded-xl border border-gold/15 bg-gold/5 p-4">
+                <span className="text-left text-[13px] leading-relaxed text-cream/65">
                   <span className="block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">North Region</span>
                   Residensi Lagenda Tropika,
                   <br />
                   Temoh, Perak
-                  <span className="mt-2 block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">Center Region</span>
+                </span>
+                <span className="text-left text-[13px] leading-relaxed text-cream/65">
+                  <span className="block text-[9px] font-bold uppercase tracking-[0.25em] text-gold/70">Center Region</span>
                   Desa Mentari Apartment,
                   <br />
                   Petaling Jaya
@@ -238,7 +227,7 @@ export function NameCardClient() {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="mt-7 flex items-center justify-center gap-4"
+              className="mt-5 flex items-center justify-center gap-4"
             >
               <a
                 href="https://wa.me/60183551765"
@@ -286,7 +275,7 @@ export function NameCardClient() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-          className="relative w-full max-w-[240px]"
+          className="relative w-full max-w-xs"
         >
           <div className="rounded-2xl border border-gold/20 bg-gold/5 p-4 shadow-[0_0_60px_-20px_rgba(201,162,75,0.25)] backdrop-blur-xl">
                 <p className="text-center text-[9px] font-bold uppercase tracking-[0.35em] text-gold/70">
